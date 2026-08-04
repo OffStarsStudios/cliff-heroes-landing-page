@@ -459,6 +459,14 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: .16em;
   color: #5a5a72;
 }
+/* Thumb carrying real art instead of the striped placeholder */
+.news-card__thumb--image { padding: 0; background: #0a0f1c; }
+.news-card__thumb--image img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
 .news-card__body { padding: 22px 22px 26px; }
 .news-card__meta {
   margin: 0;
@@ -742,6 +750,17 @@ a { color: inherit; text-decoration: none; }
   .article__close:hover,
   .article__close:active { transform: none; }
 }
+
+/* Hero with real art: the image sits under the existing bottom scrim. */
+.article__hero--image { background: #0a0f1c; }
+.article__hero-img {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+.article__hero--image::after { z-index: 1; }
 
 .article__hero {
   position: relative;

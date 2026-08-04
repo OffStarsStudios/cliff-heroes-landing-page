@@ -16,26 +16,21 @@
    ============================================================ */
 window.CLIFF_HEROES_NEWS = [
   {
-    slug: 'dev-log-07-spire-reworked',
+    slug: 'coming-soon',
     accent: 'primary',
-    category: 'PATCH 0.7 · JUN 18',
-    readTime: '4 MIN READ',
-    byline: 'ASCENDER STUDIOS',
-    title: 'Dev Log #07 — The Spire, Reworked',
-    shortTitle: 'DEV LOG #07',
-    heroLabel: 'ARTICLE HERO — 1600 × 900',
-    lede: "New grip physics, a taller spire and near-instant match resets land in this week's build — here is everything that changed on the wall.",
+    category: 'ANNOUNCEMENT · COMING SOON',
+    readTime: '2 MIN READ',
+    byline: 'OFFSTARS',
+    title: 'Cliff Heroes Is Coming Soon',
+    shortTitle: 'COMING SOON',
+    heroImage: '/assets/news-coming-soon.webp',
+    heroAlt: 'Pedro the Alchemist with the Cliff Heroes logo and a coming soon banner',
+    lede: 'Four climbers, one shifting wall, and a race to the summit. Cliff Heroes is in development for mobile, and the wishlist is open.',
     content: [
-      { type: 'p', text: 'The Spire has been our most-played map since the first playtest, and also the one you complained about most. Holds were too forgiving near the top, so every match collapsed into the same three routes. We rebuilt the upper third from scratch: 40 metres taller, three viable finishes, and a wind band that pushes climbers off the obvious line.' },
-      { type: 'p', text: 'Grip is now a continuous value instead of a binary state. Hold too long and your fingers fatigue, forcing a re-grip that costs momentum — which means saboteurs finally have a window that rewards patience over spam.' },
-      { type: 'quote', text: "“If two climbers reach the summit the same way twice, the map still isn't finished.”" },
-      { type: 'label', text: '// PATCH NOTES' },
-      { type: 'notes', items: [
-        'Spire height increased to 180 m; three new summit approaches.',
-        'Grip fatigue replaces hold-timers — re-grip costs 0.4 s of momentum.',
-        'Match reset trimmed from 11 s to 3 s between rounds.',
-        'Smoke bomb radius −15%; trap arm time −0.2 s.'
-      ] }
+      { type: 'p', text: 'Cliff Heroes is a real-time PvP climbing game. Four players take on the same procedurally-shifting ascent at once, reading the wall and chaining grips to reach the peak first. Every climber carries a kit, so the fastest route is rarely the safest one.' },
+      { type: 'p', text: 'We are still building, and we would rather show it when it is genuinely ready than ship a rushed first impression. In the meantime the roster, the abilities and the maps are all taking shape, and we will post here as pieces land.' },
+      { type: 'p', text: 'Wishlist members get early access first, straight to their inbox. No spam, and you can unsubscribe any time.' },
+      { type: 'cta', label: 'JOIN THE WISHLIST', target: '#wishlist' }
     ]
   },
   {
@@ -43,7 +38,7 @@ window.CLIFF_HEROES_NEWS = [
     accent: 'teal',
     category: 'ANNOUNCEMENT · JUN 04',
     readTime: '3 MIN READ',
-    byline: 'ASCENDER STUDIOS',
+    byline: 'OFFSTARS',
     title: 'Season 0 Closed Beta Opens',
     shortTitle: 'SEASON 0 CLOSED BETA',
     heroLabel: 'ARTICLE HERO — 1600 × 900',
@@ -64,7 +59,7 @@ window.CLIFF_HEROES_NEWS = [
     accent: 'gold',
     category: 'ROSTER · MAY 22',
     readTime: '5 MIN READ',
-    byline: 'ASCENDER STUDIOS',
+    byline: 'OFFSTARS',
     title: 'New Climber: Pedro the Alchemist',
     shortTitle: 'NEW CLIMBER: PEDRO',
     heroLabel: 'CLIMBER KEY ART — 1600 × 900',

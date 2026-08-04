@@ -6,7 +6,7 @@
 > signups for early access.
 
 - Platforms: iOS, Android
-- Studio: Ascender Studios
+- Studio: OffStars
 - Status: unreleased, early access via wishlist
 - Site: https://cliffheroes.com/
 
@@ -20,8 +20,8 @@
 
 ## News
 
-- Dev Log #07 — The Spire, Reworked: new grip physics, a taller spire, faster
-  match resets. https://cliffheroes.com/news/dev-log-07-spire-reworked
+- Cliff Heroes Is Coming Soon: the game is in development for mobile and the
+  wishlist is open. https://cliffheroes.com/news/coming-soon
 - Season 0 Closed Beta Opens: early access rolls out by region.
   https://cliffheroes.com/news/season-0-closed-beta
 - New Climber: Pedro the Alchemist: a support-saboteur built around denial.

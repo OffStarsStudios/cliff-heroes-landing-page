@@ -583,7 +583,19 @@
       closeBtn.addEventListener('click', function () { close(); });
       panel.appendChild(closeBtn);
 
-      panel.appendChild(el('div', 'article__hero', article.heroLabel));
+      // Hero: a real image when the record has one, otherwise the striped
+      // placeholder with its caption.
+      var hero = el('div', 'article__hero');
+      if (article.heroImage) {
+        hero.classList.add('article__hero--image');
+        var heroImg = el('img', 'article__hero-img');
+        heroImg.src = article.heroImage;
+        heroImg.alt = article.heroAlt || '';
+        hero.appendChild(heroImg);
+      } else {
+        hero.textContent = article.heroLabel;
+      }
+      panel.appendChild(hero);
 
       var body = el('div', 'article__body');
 
