@@ -317,6 +317,33 @@
     });
   })();
 
+  /* ---------- 5b. Live wishlist count ----------
+     Swaps the hero's benefit line for the real signup count, but only once
+     the number is worth showing — "6 climbers already wishlisted" is weaker
+     social proof than no number at all. Below the threshold (or if the API
+     is unreachable) the honest fallback copy in the HTML simply stays.
+     Set COUNT_MIN to 0 to always show the live number.                    */
+  (function setupWishlistCount() {
+    var COUNT_MIN = 500;
+    var el = document.querySelector('.hero__cta-meta');
+    if (!el) return;
+
+    fetch('/api/count')
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (!data || typeof data.count !== 'number' || data.count < COUNT_MIN) return;
+        while (el.firstChild) el.removeChild(el.firstChild);
+        var mark = document.createElement('span');
+        mark.setAttribute('aria-hidden', 'true');
+        mark.textContent = '◆';
+        el.appendChild(mark);
+        el.appendChild(document.createTextNode(
+          ' ' + data.count.toLocaleString() + ' climbers already wishlisted'
+        ));
+      })
+      .catch(function () { /* keep the fallback copy */ });
+  })();
+
   /* ---------- 6. Heart pop ----------
      A small heart floats up from the pointer whenever a primary CTA
      (JOIN THE WISHLIST / NOTIFY ME) is clicked. Purely decorative, so it is
