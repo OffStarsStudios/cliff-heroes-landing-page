@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cliff Heroes - Real-Time PvP Climbing</title>
+  <meta name="description" content="Scale the wall. Sabotage your rivals. Be first to the summit in real-time multiplayer climbs. Wishlist Cliff Heroes now.">
+
+  <!-- Icons -->
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="icon" href="/assets/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+
+  <!-- Social cards -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Cliff Heroes - Real-Time PvP Climbing">
+  <meta property="og:description" content="Scale the wall. Sabotage your rivals. Be first to the summit in real-time multiplayer climbs. Wishlist Cliff Heroes now.">
+  <meta property="og:image" content="/assets/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="/assets/og-image.png">
+
+  <!-- Google Analytics 4 (replace G-XXXXXXXXXX with the real measurement id) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+  <!-- Vercel Web Analytics (activates once enabled in the Vercel project) -->
+  <script defer src="/_vercel/insights/script.js"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css?v=12">
+</head>
+<body>
+
+  <!-- ============ HERO + NAV ============ -->
+  <header class="hero" id="home">
+    <video class="hero__video" autoplay loop muted playsinline preload="auto">
+      <source src="/assets/hero.mp4" type="video/mp4">
+    </video>
+    <div class="hero__scrim hero__scrim--corner"></div>
+    <div class="hero__scrim hero__scrim--top"></div>
+
+    <nav class="nav" aria-label="Primary">
+      <a class="nav__brand" href="#home" aria-label="Cliff Heroes home">
+        <img class="nav__logo" src="/assets/logo.png" alt="Cliff Heroes" width="480" height="279">
+      </a>
+      <ul class="nav__links">
+        <li><a href="#home">HOME</a></li>
+        <li><a href="#game">GAME</a></li>
+        <li><a href="#news">NEWS</a></li>
+        <li><a href="#roster">ROSTER</a></li>
+      </ul>
+      <a class="btn btn--wishlist-outline nav__cta" href="#wishlist" data-hover-btn>+ WISHLIST</a>
+      <button class="nav__burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+
+    <!-- Mobile slide-down menu -->
+    <div class="mobile-menu" id="mobile-menu" hidden>
+      <a href="#home">HOME</a>
+      <a href="#game">GAME</a>
+      <a href="#news">NEWS</a>
+      <a href="#roster">ROSTER</a>
+      <a class="btn btn--wishlist-outline" href="#wishlist" data-hover-btn>+ WISHLIST</a>
+    </div>
+
+    <div class="hero__content">
+      <p class="kicker kicker--accent">PVP · VERTICAL COMBAT · MOBILE</p>
+      <h1 class="hero__title">CLIFF <br>HEROES</h1>
+      <p class="hero__lede">Scale the wall. Sabotage your rivals. Be first to the summit in real-time multiplayer climbs.</p>
+
+      <div class="hero__cta">
+        <div class="hero__cta-buttons">
+          <a class="btn btn--primary" href="#wishlist" data-hover-btn>JOIN THE WISHLIST</a>
+        </div>
+        <p class="hero__cta-meta"><span aria-hidden="true">◆</span> 12,480 climbers already wishlisted</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ BLUE-SKY PLATE (features + news + wishlist) ============ -->
+  <main class="plate">
+
+    <!-- FEATURES -->
+    <section class="features section--texture-grey" id="game">
+      <div class="wrap">
+        <h2 class="section-title section-title--dark">INFINITE WAYS TO RISE</h2>
+        <div class="features__grid">
+
+          <article class="feature-card">
+            <div class="feature-card__media feature-card__media--teal" data-pvp-card>
+              <img class="feature-card__img" src="/assets/feature-climber.png" alt="A climber scaling the wall" loading="lazy">
+              <video class="feature-card__video" data-pvp-video muted playsinline preload="none" src="/assets/feature-pvp.mp4"></video>
+              <span class="tag tag--teal">REAL-TIME PVP</span>
+            </div>
+            <div class="feature-card__body">
+              <h3>Race to the Summit</h3>
+              <p>4 climbers scale the same procedurally-shifting ascent at once. Read the wall, chain your grips, and out-pace rivals to the peak.</p>
+              <p class="learn-more">LEARN MORE <span aria-hidden="true">→</span></p>
+            </div>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-card__media feature-card__media--pink" data-pvp-card>
+              <img class="feature-card__img" src="/assets/feature-saboteur.png" alt="A saboteur climber deploying abilities" loading="lazy">
+              <video class="feature-card__video" data-pvp-video muted playsinline preload="none" src="/assets/feature-sabotage.mp4"></video>
+              <span class="tag tag--pink">ABILITIES</span>
+            </div>
+            <div class="feature-card__body">
+              <h3>Smoke, Traps &amp; Sabotage</h3>
+              <p>Every climber packs a kit. Lob smoke bombs to blind the pack, drop grip-traps below you, and unlock alt loadouts as you rank up across the season.</p>
+              <p class="learn-more">LEARN MORE <span aria-hidden="true">→</span></p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- NEWS -->
+    <section class="news section--texture-blue" id="news">
+      <div class="wrap">
+        <div class="news__head">
+          <h2 class="section-title section-title--light">LATEST NEWS</h2>
+          <a class="news__all" href="#news">READ ALL UPDATES <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="news__grid">
+
+          <article class="news-card" data-hover-btn>
+            <div class="news-card__thumb" aria-hidden="true">NEWS THUMB</div>
+            <div class="news-card__body">
+              <p class="news-card__meta news-card__meta--pink">PATCH 0.7 · JUN 18</p>
+              <h4><button class="news-card__link" type="button" data-article="dev-log-07-spire-reworked">Dev Log #07 — The Spire, Reworked</button></h4>
+              <p class="news-card__excerpt">New grip physics, a taller spire, and faster match resets land in this week's build.</p>
+            </div>
+          </article>
+
+          <article class="news-card" data-hover-btn>
+            <div class="news-card__thumb" aria-hidden="true">NEWS THUMB</div>
+            <div class="news-card__body">
+              <p class="news-card__meta news-card__meta--teal">ANNOUNCEMENT · JUN 04</p>
+              <h4><button class="news-card__link" type="button" data-article="season-0-closed-beta">Season 0 Closed Beta Opens</button></h4>
+              <p class="news-card__excerpt">Wishlist members get first keys. Invites roll out by region through July.</p>
+            </div>
+          </article>
+
+          <article class="news-card" data-hover-btn>
+            <div class="news-card__thumb" aria-hidden="true">NEWS THUMB</div>
+            <div class="news-card__body">
+              <p class="news-card__meta news-card__meta--gold">ROSTER · MAY 22</p>
+              <h4><button class="news-card__link" type="button" data-article="pedro-the-alchemist">New Climber: Pedro the Alchemist</button></h4>
+              <p class="news-card__excerpt">A support-saboteur who turns the whole wall into a smoke-screen. Meet the kit.</p>
+            </div>
+          </article>
+
+        </div>
+        <a class="btn btn--updates" href="#news" data-hover-btn>READ ALL UPDATES <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <!-- WISHLIST BAND -->
+    <section class="wishlist" id="wishlist" data-wishlist-section>
+      <video class="wishlist__video" data-wishlist-video muted playsinline preload="metadata" src="/assets/wishlist.mp4"></video>
+      <div class="wishlist__scrim"></div>
+      <div class="wrap wishlist__inner">
+        <p class="kicker kicker--accent">// BE FIRST TO ASCEND</p>
+        <h2 class="wishlist__title">JOIN THE WISHLIST</h2>
+        <p class="wishlist__lede">Closed-beta builds, season drops and launch alerts — straight to your inbox.</p>
+
+        <form class="wishlist__form" novalidate>
+          <input class="wishlist__input" type="email" name="email" placeholder="your@email.com" aria-label="Email address" required>
+          <!-- honeypot: invisible to humans, bots fill it and get silently dropped -->
+          <input class="wishlist__hp" type="text" name="team_name" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button class="btn btn--primary wishlist__submit" type="submit" data-hover-btn data-wishlist-btn>NOTIFY ME</button>
+        </form>
+        <p class="wishlist__note" role="status">No spam. Unsubscribe anytime.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer section--texture-blue" id="roster">
+    <div class="wrap">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <div class="footer__logo">
+            <span class="brand-mark" aria-hidden="true"></span>
+            <span class="brand-name">CLIFF HEROES</span>
+          </div>
+          <p class="footer__blurb">A real-time PvP climbing game for mobile. Built by Ascender Studios.</p>
+          <div class="footer__socials">
+            <a href="#">X</a>
+            <a href="#">DISCORD</a>
+            <a href="#">YOUTUBE</a>
+            <a href="#">TIKTOK</a>
+          </div>
+        </div>
+        <nav class="footer__cols" aria-label="Footer">
+          <div class="footer__col">
+            <p class="footer__col-title">GAME</p>
+            <a href="#game">Overview</a>
+            <a href="#roster">Roster</a>
+            <a href="#">Seasons</a>
+            <a href="#news">News</a>
+          </div>
+          <div class="footer__col">
+            <p class="footer__col-title">STUDIO</p>
+            <a href="#">About</a>
+            <a href="#">Careers</a>
+            <a href="#">Press Kit</a>
+            <a href="#">Contact</a>
+          </div>
+          <div class="footer__col">
+            <p class="footer__col-title">SUPPORT</p>
+            <a href="#">Help Center</a>
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+            <a href="#">EULA</a>
+          </div>
+        </nav>
+      </div>
+      <div class="footer__bar">
+        <span>© 2026 ASCENDER STUDIOS. ALL RIGHTS RESERVED.</span>
+        <span>MADE FOR THE CLIMB</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/news-data.js?v=1"></script>
+  <script src="/js/main.js?v=10"></script>
+</body>
+</html>

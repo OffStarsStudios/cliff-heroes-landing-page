@@ -1,0 +1,16 @@
+# Design handoff source bundles (150MB+, not part of the site)
+_handoff_import/
+
+# Vercel local project link
+.vercel/
+
+# Dependencies (none today; guard for the future)
+node_modules/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.log
+
+# Personal Claude Code overrides
+.claude/settings.local.json

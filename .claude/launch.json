@@ -1,0 +1,15 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "ascenders",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-c",
+        "import os,http.server;http.server.test(HandlerClass=http.server.SimpleHTTPRequestHandler,ServerClass=http.server.ThreadingHTTPServer,port=int(os.environ.get('PORT','5178')),bind='127.0.0.1')"
+      ],
+      "port": 5178,
+      "autoPort": false
+    }
+  ]
+}
