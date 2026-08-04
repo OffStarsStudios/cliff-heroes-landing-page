@@ -228,15 +228,13 @@
     var burger = document.querySelector('.nav__burger');
     var menu = document.getElementById('mobile-menu');
     if (!burger || !menu) return;
-    function close() {
-      menu.hidden = true;
-      burger.setAttribute('aria-expanded', 'false');
-    }
-    burger.addEventListener('click', function () {
-      var open = menu.hidden;
+    function setState(open) {
       menu.hidden = !open;
       burger.setAttribute('aria-expanded', String(open));
-    });
+      burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    }
+    function close() { setState(false); }
+    burger.addEventListener('click', function () { setState(menu.hidden); });
     menu.querySelectorAll('a').forEach(function (a) {
       a.addEventListener('click', close);
     });

@@ -52,12 +52,12 @@ window.CLIFF_HEROES_NEWS = [
       { type: 'p', text: 'Cliff is a Speedster, which means he trades safety for pace. He rewards players who read obstacles early and commit, rather than reacting late and bleeding momentum.' },
       { type: 'stats', items: [
         { label: 'CLASS', value: 'Speedster' },
-        { label: 'RARITY', value: 'Rare', note: 'Rare · Epic · Legendary' }
+        { label: 'RARITY', value: 'Rare', note: 'Common · Rare · Epic · Legendary' }
       ] },
       { type: 'h', text: 'Special Ability' },
       { type: 'p', text: 'Cliff gains hyper speed for a limited time. Every obstacle he successfully evades while it is active adds extra time to the ability, so a clean run keeps him accelerating. String evasions together and it carries him a long way up the wall; miss them and the clock simply runs down.' },
       { type: 'h', text: 'Rarity' },
-      { type: 'p', text: 'Cliff is a Rare hero. The current tiers are Rare, Epic and Legendary, and the roster will keep growing as we introduce more heroes here.' },
+      { type: 'p', text: 'Cliff is a Rare hero. The current tiers are Common, Rare, Epic and Legendary, and the roster will keep growing as we introduce more heroes here.' },
       { type: 'cta', label: 'JOIN THE WISHLIST', target: '#wishlist' }
     ]
   },
@@ -76,12 +76,12 @@ window.CLIFF_HEROES_NEWS = [
       { type: 'p', text: 'Where a Speedster wins by out-pacing everyone, Guy wins by making the climb harder for whoever is closest. He is built to pressure rivals rather than outrun them, which makes him a steady pick when the pack is tightly bunched.' },
       { type: 'stats', items: [
         { label: 'CLASS', value: 'Control' },
-        { label: 'RARITY', value: 'Rare', note: 'Rare · Epic · Legendary' }
+        { label: 'RARITY', value: 'Rare', note: 'Common · Rare · Epic · Legendary' }
       ] },
       { type: 'h', text: 'Special Ability' },
       { type: 'p', text: 'Guy launches a heat-seeking missile. It tracks the nearest opponent from above and fires on them, and a hit takes 1 HP off that climber. Because it always chooses the closest target, where you sit in the pack decides who it goes after.' },
       { type: 'h', text: 'Rarity' },
-      { type: 'p', text: 'Guy is a Rare hero. The current tiers are Rare, Epic and Legendary, and the roster will keep growing as we introduce more heroes here.' },
+      { type: 'p', text: 'Guy is a Rare hero. The current tiers are Common, Rare, Epic and Legendary, and the roster will keep growing as we introduce more heroes here.' },
       { type: 'cta', label: 'JOIN THE WISHLIST', target: '#wishlist' }
     ]
   }

@@ -214,18 +214,29 @@ a { color: inherit; text-decoration: none; }
 
 .nav__burger {
   display: none;
+  width: 44px; height: 44px;      /* touch minimum; bars stay 20px */
+  margin-right: -11px;            /* keeps the glyph optically on the edge */
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 4px;
   background: none;
   border: 0;
-  padding: 6px 0;
+  padding: 0;
   cursor: pointer;
 }
 .nav__burger span {
   width: 20px; height: 2px;
   background: #9a9ab2;
-  transition: transform .2s ease, opacity .2s ease;
+  border-radius: 1px;
+  transition: transform .25s ease, opacity .18s ease, background-color .18s ease;
 }
+/* Open state folds the three bars into an X. Bars sit 6px either side of
+   centre (2px tall, 4px gap), so 6px of travel meets in the middle. */
+.nav__burger[aria-expanded="true"] span { background: #fff; }
+.nav__burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.nav__burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; transform: scaleX(.3); }
+.nav__burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
 .mobile-menu[hidden] { display: none; }
 .mobile-menu {
@@ -238,13 +249,19 @@ a { color: inherit; text-decoration: none; }
   background: rgba(7,7,12,.92);
   border-bottom: 1px solid rgba(255,255,255,.1);
 }
-.mobile-menu a {
+/* :not(.btn) matters: this rule outranks .btn--wishlist-outline, so without
+   it the CTA loses its horizontal padding and renders cramped. */
+.mobile-menu a:not(.btn) {
   font: 700 12px var(--font-mono);
   letter-spacing: .18em;
   color: #cfcfe0;
   padding: 12px 0;
 }
-.mobile-menu .btn { align-self: flex-start; margin-top: 6px; }
+.mobile-menu .btn {
+  align-self: stretch;      /* full-width CTA reads as deliberate */
+  justify-content: center;
+  margin-top: 12px;
+}
 
 /* hero content */
 .hero__content {
@@ -1105,5 +1122,6 @@ a { color: inherit; text-decoration: none; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .feature-card__video, .wishlist__video { transition: none; }
+  .nav__burger span { transition: none; }
   .heart-pop { display: none; }
 }
