@@ -368,6 +368,11 @@
     var lastFocused = null;
     var closeTimer = null;
     var scrimPressed = false;
+    // True only when THIS overlay session pushed a history entry (card click).
+    // Deep-link/popstate opens have no site entry beneath them, so closing
+    // those must replaceState to '/' instead of history.back() — otherwise
+    // close would navigate the visitor off the site entirely.
+    var openedViaPush = false;
 
     /* ---- helpers ---- */
     function el(tag, cls, text) {
@@ -587,8 +592,15 @@
       panel.focus();
 
       var path = '/news/' + slug;
-      if (history_ === 'replace') history.replaceState({ article: slug }, '', path);
-      else if (history_ === 'push') history.pushState({ article: slug }, '', path);
+      if (history_ === 'replace') {
+        history.replaceState({ article: slug }, '', path);
+      } else if (history_ === 'push') {
+        history.pushState({ article: slug }, '', path);
+        openedViaPush = true;
+      } else {
+        // deep link or popstate: the URL is already correct; no entry of ours
+        openedViaPush = false;
+      }
     }
 
     /* ---- close ---- */
@@ -612,8 +624,14 @@
         closeTimer = setTimeout(finish, 150);
       }
 
-      // Undo the entry pushed on open so Back/close stay in sync.
-      if (!fromPopstate) history.back();
+      // Card-click opens pushed an entry -> pop it so Back stays in sync.
+      // Deep-link opens have no site entry beneath -> rewrite to home instead
+      // (history.back() there would leave the site).
+      if (!fromPopstate) {
+        if (openedViaPush) history.back();
+        else history.replaceState({}, '', '/');
+      }
+      openedViaPush = false;
     }
 
     function goToWishlist(target) {
