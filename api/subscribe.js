@@ -52,23 +52,39 @@ module.exports = async function handler(req, res) {
   var listId = parseInt(process.env.BREVO_LIST_ID, 10);
   if (!isNaN(listId)) payload.listIds = [listId];
 
-  try {
-    var brevo = await fetch('https://api.brevo.com/v3/contacts', {
+  function send(body) {
+    return fetch('https://api.brevo.com/v3/contacts', {
       method: 'POST',
       headers: {
         'accept': 'application/json',
         'content-type': 'application/json',
         'api-key': process.env.BREVO_API_KEY
       },
-      body: JSON.stringify(payload)
+      body: JSON.stringify(body)
     });
+  }
 
-    // 201 = created, 204 = updated existing contact
-    if (brevo.status === 201 || brevo.status === 204) {
-      return res.status(200).json({ ok: true });
-    }
+  // 201 = created, 204 = updated an existing contact
+  var ok = function (s) { return s === 201 || s === 204; };
+
+  try {
+    var brevo = await send(payload);
+    if (ok(brevo.status)) return res.status(200).json({ ok: true });
 
     var detail = await brevo.text();
+
+    // Brevo rejects attributes that have not been defined in the account.
+    // Losing a signup over a missing custom field would be the worst
+    // outcome, so retry once with just the email + list membership.
+    if (brevo.status === 400 && /attribut/i.test(detail)) {
+      console.warn('Brevo rejected attributes, retrying bare:', detail.slice(0, 200));
+      var bare = { email: email, updateEnabled: true };
+      if (payload.listIds) bare.listIds = payload.listIds;
+      var retry = await send(bare);
+      if (ok(retry.status)) return res.status(200).json({ ok: true, degraded: true });
+      detail = await retry.text();
+    }
+
     console.error('Brevo rejected signup:', brevo.status, detail.slice(0, 300));
     return res.status(502).json({ ok: false, error: 'Subscription failed' });
   } catch (err) {
