@@ -88,28 +88,6 @@ module.exports = async function handler(req, res) {
     }
 
     console.error('Brevo rejected signup:', brevo.status, detail.slice(0, 300));
-    // TEMPORARY setup diagnostic: surfaces the upstream status/code so the
-    // integration can be verified without digging through runtime logs.
-    // Remove once the first real signup lands.
-    if (req.query && req.query.diag === '1') {
-      var code = '';
-      try { code = (JSON.parse(detail) || {}).code || ''; } catch (e) {}
-      // Key shape only — never the key. The fingerprint is a one-way hash,
-      // used solely to tell whether a redeploy picked up a changed value.
-      var raw = (process.env.BREVO_API_KEY || '').trim();
-      var fp = require('crypto').createHash('sha256').update(raw).digest('hex').slice(0, 8);
-      return res.status(502).json({
-        ok: false,
-        error: 'Subscription failed',
-        brevoStatus: brevo.status,
-        brevoCode: code,
-        keyLen: raw.length,
-        keyPrefix: raw.slice(0, 8),
-        looksLikeBase64Blob: raw.slice(0, 3) === 'eyJ',
-        keyFingerprint: fp,
-        listId: process.env.BREVO_LIST_ID || '(unset)'
-      });
-    }
     return res.status(502).json({ ok: false, error: 'Subscription failed' });
   } catch (err) {
     console.error('Brevo request failed:', err);
