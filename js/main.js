@@ -228,10 +228,24 @@
     var burger = document.querySelector('.nav__burger');
     var menu = document.getElementById('mobile-menu');
     if (!burger || !menu) return;
+    var hideTimer;
     function setState(open) {
-      menu.hidden = !open;
       burger.setAttribute('aria-expanded', String(open));
       burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      clearTimeout(hideTimer);
+      if (open) {
+        menu.hidden = false;
+        // Reflow between display:none and .is-open, otherwise the browser
+        // coalesces both into one style change and the reveal never animates.
+        void menu.offsetHeight;
+        menu.classList.add('is-open');
+      } else {
+        menu.classList.remove('is-open');
+        // Stays in the a11y tree and tab order only while it is on screen;
+        // hidden goes back on once the collapse has finished.
+        hideTimer = setTimeout(function () { menu.hidden = true; },
+                               prefersReduced ? 0 : 380);
+      }
     }
     function close() { setState(false); }
     burger.addEventListener('click', function () { setState(menu.hidden); });
