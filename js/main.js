@@ -174,7 +174,7 @@
         // background-image, not the `background` shorthand, so the CSS
         // background-origin: border-box survives (keeps edges on-gradient).
         btn.style.backgroundImage = 'linear-gradient(180deg, ' + rgb(top) + ', ' + rgb(bot) + ')';
-        btn.style.boxShadow = '0 0 28px rgba(' + glow[0] + ',' + glow[1] + ',' + glow[2] + ',.55)';
+        btn.style.boxShadow = '0 0 20px rgba(' + glow[0] + ',' + glow[1] + ',' + glow[2] + ',.3)';
       });
     }
 
@@ -306,7 +306,7 @@
         submit.disabled = false;
         submit.textContent = restLabel;
         if (result.ok) {
-          setNote("You're on the list — watch your inbox for beta keys.", 'wishlist__note--ok');
+          setNote("You're on the list. We'll email you when early access opens.", 'wishlist__note--ok');
           form.reset();
           track('wishlist_submit', { source: 'wishlist-band' });
         } else {
