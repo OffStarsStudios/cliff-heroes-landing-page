@@ -62,22 +62,27 @@ window.CLIFF_HEROES_NEWS = [
     ]
   },
   {
-    slug: 'pedro-the-alchemist',
+    slug: 'new-climber-guy',
     accent: 'gold',
-    category: 'ROSTER · MAY 22',
-    readTime: '5 MIN READ',
+    category: 'ROSTER · NEW HERO',
+    readTime: '2 MIN READ',
     byline: 'OFFSTARS STUDIOS',
-    title: 'New Climber: Pedro the Alchemist',
-    shortTitle: 'NEW CLIMBER: PEDRO',
-    heroLabel: 'CLIMBER KEY ART — 1600 × 900',
-    lede: 'A support-saboteur who turns the whole wall into a smoke-screen. Here is the kit, and how to play against it.',
+    title: 'New Climber: Guy',
+    shortTitle: 'NEW CLIMBER: GUY',
+    heroImage: '/assets/hero-guy.webp',
+    heroAlt: 'Guy, a Control hero wearing a visor',
+    lede: 'Meet Guy, a Control hero who fights from above. His heat-seeking missile picks out the nearest opponent and takes health off them.',
     content: [
-      { type: 'kit', portrait: 'CLIMBER\nPORTRAIT', abilities: [
-        { label: 'PASSIVE · REAGENTS', name: 'Brews a charge every 12 m climbed', desc: 'Height is his ammo — camping the base leaves him empty.' },
-        { label: 'Q · SMOKE FLASK', name: 'Blinds a 6 m column for 4 seconds', desc: 'Hides holds, not climbers — audio still gives you away.' },
-        { label: 'R · TRANSMUTE', name: 'Turns one hold into a slick surface', desc: 'One-shot per round and it marks him on the minimap.' }
+      { type: 'p', text: 'Where a Speedster wins by out-pacing everyone, Guy wins by making the climb harder for whoever is closest. He is built to pressure rivals rather than outrun them, which makes him a steady pick when the pack is tightly bunched.' },
+      { type: 'stats', items: [
+        { label: 'CLASS', value: 'Control' },
+        { label: 'RARITY', value: 'Rare', note: 'Rare · Epic · Legendary' }
       ] },
-      { type: 'p', text: 'Pedro is the first climber built around denial rather than speed. In testing, teams that ran him won 8% more matches on The Spire and 4% fewer on open faces — he needs walls to work with. Counterplay: rush the first 40 m before he has charges, or bring a climber who can re-route.' }
+      { type: 'h', text: 'Special Ability' },
+      { type: 'p', text: 'Guy launches a heat-seeking missile. It tracks the nearest opponent from above and fires on them, and a hit takes 1 HP off that climber. Because it always chooses the closest target, where you sit in the pack decides who it goes after.' },
+      { type: 'h', text: 'Rarity' },
+      { type: 'p', text: 'Guy is a Rare hero. The current tiers are Rare, Epic and Legendary, and the roster will keep growing as we introduce more heroes here.' },
+      { type: 'cta', label: 'JOIN THE WISHLIST', target: '#wishlist' }
     ]
   }
 ];

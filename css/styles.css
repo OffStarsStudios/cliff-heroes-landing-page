@@ -476,8 +476,16 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: .16em;
   color: #5a5a72;
 }
-/* Thumb carrying real art instead of the striped placeholder */
-.news-card__thumb--image { padding: 0; background: #0a0f1c; }
+/* Thumb carrying real art instead of the striped placeholder.
+   The art's own blue background sits right against the blue card, so a soft
+   shadow casts onto the body to separate the two. */
+.news-card__thumb--image {
+  padding: 0;
+  background: #0a0f1c;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 7px 12px -7px rgba(4, 10, 24, .6);
+}
 .news-card__thumb--image img {
   width: 100%; height: 100%;
   object-fit: cover;
@@ -1036,17 +1044,29 @@ a { color: inherit; text-decoration: none; }
   .news__grid { grid-template-columns: 1fr; gap: 14px; margin-top: 24px; }
   .news-card {
     display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 14px;
+    align-items: stretch;   /* lets the art fill the row's full height */
+    gap: 0;
+    padding: 0;
     border-radius: 16px;
   }
   .news-card__thumb {
-    width: 84px; height: 84px; flex: none;
+    width: 124px;
+    height: auto;           /* overrides the fixed 172px */
+    min-height: 104px;
+    flex: none;
     background: repeating-linear-gradient(135deg, #1c3554, #1c3554 8px, #122843 8px, #122843 16px);
     font-size: 0;
   }
-  .news-card__body { padding: 0; }
+  /* shadow moves to the right edge now that the art sits beside the text */
+  .news-card__thumb--image {
+    box-shadow: 7px 0 12px -7px rgba(4, 10, 24, .6);
+  }
+  .news-card__body {
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
   .news-card__meta { font-size: 9px; letter-spacing: .12em; }
   .news-card__body h4 { margin-top: 7px; font-size: 15px; }
   .news-card__excerpt { display: none; }

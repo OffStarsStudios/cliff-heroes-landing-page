@@ -24,8 +24,8 @@
   wishlist is open. https://cliffheroes.com/news/coming-soon
 - Introducing Cliff: a Speedster hero whose hyper speed extends with every
   successful evasion. https://cliffheroes.com/news/introducing-cliff
-- New Climber: Pedro the Alchemist: a support-saboteur built around denial.
-  https://cliffheroes.com/news/pedro-the-alchemist
+- New Climber: Guy: a Control hero with a heat-seeking missile.
+  https://cliffheroes.com/news/new-climber-guy
 
 ## Notes
 
