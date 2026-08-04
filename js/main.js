@@ -44,6 +44,18 @@
     });
     var p = v.play();
     if (p && p.catch) p.catch(function () {});
+
+    // iOS Low Power Mode (and similar) rejects autoplay even for muted
+    // inline video. Retry on the first touch so the hero recovers with
+    // the user's first interaction; the poster covers it until then.
+    var kick = function () {
+      if (v.paused) {
+        var q = v.play();
+        if (q && q.catch) q.catch(function () {});
+      }
+      window.removeEventListener('touchstart', kick);
+    };
+    window.addEventListener('touchstart', kick, { passive: true });
   });
 
   /* ---------- 2. Feature card videos ----------
@@ -117,7 +129,7 @@
     var TAIL_SPEED = 0.65;
     var tail = document.createElement('video');
     tail.className = v.className;
-    tail.src = '/assets/wishlist-tail.mp4';
+    tail.src = '/assets/wishlist-tail.mp4?v=2';
     tail.muted = true;
     tail.loop = true;
     tail.playsInline = true;
