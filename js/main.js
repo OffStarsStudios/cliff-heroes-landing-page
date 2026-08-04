@@ -495,6 +495,17 @@
         b.items.forEach(function (t) { notes.appendChild(el('div', 'article__note', t)); });
         return notes;
       }
+      if (b.type === 'stats') {
+        var stats = el('div', 'article__waves article__waves--stats');
+        b.items.forEach(function (s) {
+          var cell = el('div', 'article__wave');
+          cell.appendChild(el('div', 'article__wave-label', s.label));
+          cell.appendChild(el('div', 'article__wave-region', s.value));
+          if (s.note) cell.appendChild(el('div', 'article__wave-count', s.note));
+          stats.appendChild(cell);
+        });
+        return stats;
+      }
       if (b.type === 'waves') {
         var grid = el('div', 'article__waves');
         b.items.forEach(function (w) {

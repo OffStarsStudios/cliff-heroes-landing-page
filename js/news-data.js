@@ -38,23 +38,26 @@ window.CLIFF_HEROES_NEWS = [
     ]
   },
   {
-    slug: 'season-0-closed-beta',
+    slug: 'introducing-cliff',
     accent: 'teal',
-    category: 'ANNOUNCEMENT · JUN 04',
-    readTime: '3 MIN READ',
+    category: 'ROSTER · NEW HERO',
+    readTime: '2 MIN READ',
     byline: 'OFFSTARS STUDIOS',
-    title: 'Season 0 Closed Beta Opens',
-    shortTitle: 'SEASON 0 CLOSED BETA',
-    heroLabel: 'ARTICLE HERO — 1600 × 900',
-    lede: 'Wishlist members get the first keys. Invites roll out region by region through July, and every wave doubles in size.',
+    title: 'Introducing Cliff',
+    shortTitle: 'INTRODUCING CLIFF',
+    heroImage: '/assets/hero-cliff.webp',
+    heroAlt: 'Cliff, a Speedster hero in a blue jacket',
+    lede: 'Meet Cliff, a Speedster built around momentum. Trigger his hyper speed, then keep it alive by evading everything the climb throws at you.',
     content: [
-      { type: 'p', text: 'Season 0 is a real season, not a stress test: ranked ladders, the full 12-climber roster, and a battle pass that carries into launch. We are starting small so matchmaking stays tight — expect queues under 30 seconds in every active region.' },
-      { type: 'p', text: 'Keys arrive by email, tied to the address on your wishlist. No streamer embargo, no NDA — record it, clip it, tell us what breaks.' },
-      { type: 'waves', items: [
-        { label: 'WAVE 01 · JUN 12', region: 'EU + UK', count: '5,000 keys' },
-        { label: 'WAVE 02 · JUN 26', region: 'NA + LATAM', count: '12,000 keys' },
-        { label: 'WAVE 03 · JUL 10', region: 'APAC + OCE', count: 'Open cap' }
+      { type: 'p', text: 'Cliff is a Speedster, which means he trades safety for pace. He rewards players who read obstacles early and commit, rather than reacting late and bleeding momentum.' },
+      { type: 'stats', items: [
+        { label: 'CLASS', value: 'Speedster' },
+        { label: 'RARITY', value: 'Rare', note: 'Rare · Epic · Legendary' }
       ] },
+      { type: 'h', text: 'Special Ability' },
+      { type: 'p', text: 'Cliff gains hyper speed for a limited time. Every obstacle he successfully evades while it is active adds extra time to the ability, so a clean run keeps him accelerating. String evasions together and it carries him a long way up the wall; miss them and the clock simply runs down.' },
+      { type: 'h', text: 'Rarity' },
+      { type: 'p', text: 'Cliff is a Rare hero. The current tiers are Rare, Epic and Legendary, and the roster will keep growing as we introduce more heroes here.' },
       { type: 'cta', label: 'JOIN THE WISHLIST', target: '#wishlist' }
     ]
   },

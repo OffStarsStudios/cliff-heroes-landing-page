@@ -22,8 +22,8 @@
 
 - Cliff Heroes Is Coming Soon: the game is in development for mobile and the
   wishlist is open. https://cliffheroes.com/news/coming-soon
-- Season 0 Closed Beta Opens: early access rolls out by region.
-  https://cliffheroes.com/news/season-0-closed-beta
+- Introducing Cliff: a Speedster hero whose hyper speed extends with every
+  successful evasion. https://cliffheroes.com/news/introducing-cliff
 - New Climber: Pedro the Alchemist: a support-saboteur built around denial.
   https://cliffheroes.com/news/pedro-the-alchemist
 
