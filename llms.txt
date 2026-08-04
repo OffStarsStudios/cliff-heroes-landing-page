@@ -6,7 +6,7 @@
 > signups for early access.
 
 - Platforms: iOS, Android
-- Studio: OffStars
+- Studio: OffStars Studios
 - Status: unreleased, early access via wishlist
 - Site: https://cliffheroes.com/
 

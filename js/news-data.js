@@ -1,12 +1,16 @@
 /* ============================================================
-   Cliff Heroes — news article records
-   Single source for the article overlay. The news cards in
-   index.html are the pre-rendered card view of these same
-   records (kept static so they stay indexable without JS).
+   Cliff Heroes — article records
+
+   Two collections, both rendered by the same overlay:
+     CLIFF_HEROES_NEWS     dark panel,  /news/<slug>
+     CLIFF_HEROES_FEATURES light panel, /game/<slug>
+   The cards in index.html are the pre-rendered card view of
+   these records (kept static so they stay indexable without JS).
 
    `content` is an ordered list of blocks so each article can
    place its article-specific block wherever it belongs:
      { type: 'p',     text }
+     { type: 'h',     text }   subheading
      { type: 'quote', text }
      { type: 'label', text }
      { type: 'notes', items: [text] }
@@ -20,7 +24,7 @@ window.CLIFF_HEROES_NEWS = [
     accent: 'primary',
     category: 'ANNOUNCEMENT · COMING SOON',
     readTime: '2 MIN READ',
-    byline: 'OFFSTARS',
+    byline: 'OFFSTARS STUDIOS',
     title: 'Cliff Heroes Is Coming Soon',
     shortTitle: 'COMING SOON',
     heroImage: '/assets/news-coming-soon.webp',
@@ -38,7 +42,7 @@ window.CLIFF_HEROES_NEWS = [
     accent: 'teal',
     category: 'ANNOUNCEMENT · JUN 04',
     readTime: '3 MIN READ',
-    byline: 'OFFSTARS',
+    byline: 'OFFSTARS STUDIOS',
     title: 'Season 0 Closed Beta Opens',
     shortTitle: 'SEASON 0 CLOSED BETA',
     heroLabel: 'ARTICLE HERO — 1600 × 900',
@@ -59,7 +63,7 @@ window.CLIFF_HEROES_NEWS = [
     accent: 'gold',
     category: 'ROSTER · MAY 22',
     readTime: '5 MIN READ',
-    byline: 'OFFSTARS',
+    byline: 'OFFSTARS STUDIOS',
     title: 'New Climber: Pedro the Alchemist',
     shortTitle: 'NEW CLIMBER: PEDRO',
     heroLabel: 'CLIMBER KEY ART — 1600 × 900',
@@ -71,6 +75,50 @@ window.CLIFF_HEROES_NEWS = [
         { label: 'R · TRANSMUTE', name: 'Turns one hold into a slick surface', desc: 'One-shot per round and it marks him on the minimap.' }
       ] },
       { type: 'p', text: 'Pedro is the first climber built around denial rather than speed. In testing, teams that ran him won 8% more matches on The Spire and 4% fewer on open faces — he needs walls to work with. Counterplay: rush the first 40 m before he has charges, or bring a climber who can re-route.' }
+    ]
+  }
+];
+
+/* ---------- Feature articles (light panel, /game/<slug>) ---------- */
+window.CLIFF_HEROES_FEATURES = [
+  {
+    slug: 'race-to-the-summit',
+    accent: 'teal',
+    category: 'REAL-TIME PVP',
+    readTime: '2 MIN READ',
+    byline: 'OFFSTARS STUDIOS',
+    title: 'Race to the Summit',
+    shortTitle: 'RACE TO THE SUMMIT',
+    heroImage: '/assets/feature-climber.webp',
+    heroAlt: 'A climber scaling the wall',
+    lede: 'Cliff Heroes is a fast-paced multiplayer climbing game where heroes race up dangerous cliffs filled with obstacles, traps and rival climbers.',
+    content: [
+      { type: 'p', text: 'Swipe between lanes, jump over hazards and react quickly as the climb becomes faster and more challenging. Reach the top before your opponents, or be the last hero still climbing.' },
+      { type: 'h', text: 'Choose Your Hero' },
+      { type: 'p', text: 'Every hero has a different personality, playstyle and special ability. Some heroes can protect themselves from obstacles, while others gain speed, disrupt opponents or create opportunities to take the lead.' },
+      { type: 'p', text: 'As you play, you can unlock new heroes, upgrade them and discover the ability that best fits your strategy.' },
+      { type: 'h', text: 'Explore New Arenas' },
+      { type: 'p', text: 'Progress through a collection of unique arenas, each featuring a different environment, visual style and set of challenges. Higher arenas introduce tougher climbs, better rewards and new obstacles to master.' },
+      { type: 'cta', label: 'JOIN THE WISHLIST', target: '#wishlist' }
+    ]
+  },
+  {
+    slug: 'heroes-and-abilities',
+    accent: 'primary',
+    category: 'ABILITIES',
+    readTime: '2 MIN READ',
+    byline: 'OFFSTARS STUDIOS',
+    title: 'Heroes & Abilities',
+    shortTitle: 'HEROES & ABILITIES',
+    heroImage: '/assets/feature-saboteur.webp',
+    heroAlt: 'A hero deploying an ability on the climb',
+    lede: 'Every hero brings a different ability to the wall, and knowing when to spend it is often what decides the climb.',
+    content: [
+      { type: 'p', text: 'No two heroes play the same way. Some are built to protect themselves and shrug off obstacles that would stop anyone else. Others trade safety for raw speed, disrupt the climbers around them, or open up a window to take the lead at exactly the right moment.' },
+      { type: 'h', text: 'Build Your Roster' },
+      { type: 'p', text: 'Unlock new heroes as you play, upgrade the ones you like, and work out which ability actually fits the way you climb. A hero that feels unbeatable in one arena can be the wrong pick in the next.' },
+      { type: 'p', text: 'The roster is still growing, and we will introduce heroes here as they are ready.' },
+      { type: 'cta', label: 'JOIN THE WISHLIST', target: '#wishlist' }
     ]
   }
 ];

@@ -392,15 +392,31 @@
      focus trap + restore, 44px close target, reduced-motion, and /news/<slug>
      history sync so Back closes the overlay.                                */
   (function setupArticleOverlay() {
-    var articles = window.CLIFF_HEROES_NEWS;
-    var triggers = document.querySelectorAll('.news-card__link[data-article]');
-    if (!articles || !articles.length || !triggers.length) return;
+    // Two collections share one overlay. Each record carries its own URL
+    // prefix, panel theme and sibling list (so "next" cycles within its own
+    // collection rather than jumping between news and game articles).
+    var COLLECTIONS = [
+      { items: window.CLIFF_HEROES_NEWS,     prefix: '/news/', theme: 'dark'  },
+      { items: window.CLIFF_HEROES_FEATURES, prefix: '/game/', theme: 'light' }
+    ];
+    var triggers = document.querySelectorAll('[data-article]');
+    if (!triggers.length) return;
 
     // TODO: swap for the real community invite (the footer DISCORD link too).
     var DISCORD_INVITE = 'https://discord.com/invite/cliffheroes';
 
     var bySlug = {};
-    articles.forEach(function (a, i) { a._index = i; bySlug[a.slug] = a; });
+    COLLECTIONS.forEach(function (c) {
+      if (!c.items || !c.items.length) return;
+      c.items.forEach(function (a, i) {
+        a._index = i;
+        a._siblings = c.items;
+        a._prefix = c.prefix;
+        a._theme = c.theme;
+        bySlug[a.slug] = a;
+      });
+    });
+    if (!Object.keys(bySlug).length) return;
 
     var scrim = null, panel = null;
     var currentSlug = null;
@@ -428,10 +444,10 @@
       return b;
     }
     function slugFromPath(p) {
-      var m = /^\/news\/([^\/?#]+)/.exec(p || '');
+      var m = /^\/(?:news|game)\/([^\/?#]+)/.exec(p || '');
       return m ? decodeURIComponent(m[1]) : null;
     }
-    function articleUrl(slug) { return window.location.origin + '/news/' + slug; }
+    function articleUrl(a) { return window.location.origin + a._prefix + a.slug; }
 
     /* ---- scroll lock (compensates for the scrollbar so nothing shifts) ---- */
     function lockScroll() {
@@ -470,6 +486,7 @@
     /* ---- content blocks ---- */
     function renderBlock(b) {
       if (b.type === 'p')     return el('p', 'article__p', b.text);
+      if (b.type === 'h')     return el('h3', 'article__h', b.text);
       if (b.type === 'quote') return el('div', 'article__quote', b.text);
       if (b.type === 'label') return el('div', 'article__label', b.text);
 
@@ -519,7 +536,7 @@
     function renderFooter(article) {
       var footer = el('div', 'article__footer');
       var share = el('div', 'article__share');
-      var url = articleUrl(article.slug);
+      var url = articleUrl(article);
 
       share.appendChild(chip('SHARE ON X', function () {
         track('share_click', { method: 'x', slug: article.slug });
@@ -538,7 +555,8 @@
       share.appendChild(copy);
       footer.appendChild(share);
 
-      var next = articles[(article._index + 1) % articles.length];
+      var sibs = article._siblings;
+      var next = sibs[(article._index + 1) % sibs.length];
       var nextBtn = el('button', 'article__next', 'NEXT · ' + next.shortTitle + ' →');
       nextBtn.type = 'button';
       nextBtn.setAttribute('data-hover-btn', '');
@@ -573,6 +591,7 @@
 
     function render(article) {
       panel.setAttribute('data-accent', article.accent);
+      panel.classList.toggle('article--light', article._theme === 'light');
       while (panel.firstChild) panel.removeChild(panel.firstChild);
 
       // Bare ✕ (no circle chrome); hover/focus styling lives on the glyph,
@@ -642,7 +661,7 @@
       panel.scrollTop = 0;
       panel.focus();
 
-      var path = '/news/' + slug;
+      var path = article._prefix + slug;
       if (history_ === 'replace') {
         history.replaceState({ article: slug }, '', path);
       } else if (history_ === 'push') {
@@ -723,9 +742,15 @@
 
     /* ---- triggers ---- */
     triggers.forEach(function (btn) {
-      btn.addEventListener('click', function () {
+      var slug = btn.getAttribute('data-article');
+      // Feature cards open from anywhere on the card. Binding the card (not
+      // the button) avoids a stretched-link overlay, which would sit above
+      // the media and break its hover-to-play video. The inner button keeps
+      // keyboard access, and its click bubbles to this same handler.
+      var target = (btn.closest && btn.closest('.feature-card')) || btn;
+      target.addEventListener('click', function () {
         lastFocused = btn;
-        show(btn.getAttribute('data-article'), 'push');
+        show(slug, 'push');
       });
     });
 

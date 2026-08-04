@@ -373,6 +373,23 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: .14em;
   color: var(--ink-faint) !important;
 }
+/* The card opens its article; this button carries keyboard access while the
+   whole card handles pointer clicks (see main.js). */
+.feature-card { cursor: pointer; }
+.feature-card__link {
+  margin: 0; padding: 0; border: 0;
+  background: none;
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+.feature-card__link:focus { outline: none; }
+.feature-card__link:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+@supports selector(:has(*)) {
+  .feature-card__link:focus-visible { outline: none; }
+  .feature-card:has(.feature-card__link:focus-visible) { outline: 2px solid #fff; outline-offset: 3px; }
+}
 
 .tag {
   position: absolute;
@@ -751,6 +768,55 @@ a { color: inherit; text-decoration: none; }
   .article__close:active { transform: none; }
 }
 
+/* ---- Light variant: matches the bright "Infinite Ways to Rise" section ----
+   Same structure as the dark panel, repainted for the light card palette.
+   Accents are darkened per-theme because the neon teal/orange are unreadable
+   as small text on a light surface. */
+.article--light {
+  background: linear-gradient(180deg, #f5f6f7, #dcdee1);
+  border-color: rgba(20, 32, 54, .14);
+  color: var(--ink);
+}
+.article--light[data-accent="teal"]    { --art-accent: #0c8578; --art-accent-rgb: 12, 133, 120; }
+.article--light[data-accent="primary"] { --art-accent: #a85800; --art-accent-rgb: 168, 88, 0; }
+.article--light[data-accent="gold"]    { --art-accent: #8a6300; --art-accent-rgb: 138, 99, 0; }
+
+.article--light .article__title,
+.article--light .article__h        { color: var(--ink); }
+.article--light .article__lede     { color: var(--ink); font-weight: 600; }
+.article--light .article__p        { color: var(--ink-soft); }
+.article--light .article__meta span{ color: rgba(22, 34, 58, .5); }
+.article--light .article__footer   { border-top-color: rgba(20, 32, 54, .16); }
+.article--light .article__chip {
+  border-color: rgba(20, 32, 54, .2);
+  color: var(--ink-soft);
+}
+.article--light .article__next {
+  color: var(--art-accent);
+  border-bottom-color: rgba(var(--art-accent-rgb), .5);
+}
+.article--light [data-hover-btn]:hover { outline-color: var(--ink); }
+.article--light .article__close {
+  color: rgba(22, 34, 58, .7);
+  text-shadow: 0 1px 6px rgba(255, 255, 255, .8);
+}
+.article--light .article__close:hover { color: var(--ink); }
+.article--light .article__close:focus-visible { outline-color: var(--ink); }
+/* the hero scrim fades into the light panel instead of the dark one */
+.article--light .article__hero::after {
+  background: linear-gradient(180deg, transparent 45%, rgba(245, 246, 247, .95));
+}
+.article--light .article__quote  { color: var(--ink); }
+.article--light .article__label  { color: rgba(22, 34, 58, .55); }
+
+/* Subheading inside article body */
+.article__h {
+  margin: 32px 0 0;
+  font: 700 21px/1.3 var(--font-display);
+  color: #fff;
+}
+.article__h + .article__p { margin-top: 12px; }
+
 /* Hero with real art: the image sits under the existing bottom scrim. */
 .article__hero--image { background: #0a0f1c; }
 .article__hero-img {
@@ -952,7 +1018,8 @@ a { color: inherit; text-decoration: none; }
   .feature-card__body { padding: 22px; }
   .feature-card__body h3 { font-size: 22px; }
   .feature-card__body p { font-size: 14px; }
-  .learn-more { display: none; }
+  /* kept visible on mobile: it is now the card's keyboard-accessible control */
+  .learn-more { margin-top: 16px !important; }
 
   .news { padding: 40px 0 44px; }
   .news__all { display: none; }
