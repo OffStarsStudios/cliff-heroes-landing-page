@@ -30,24 +30,29 @@
   <!-- Vercel Web Analytics (activates once enabled in the Vercel project) -->
   <script defer src="/_vercel/insights/script.js"></script>
 
+  <!-- LCP candidate: paint the hero still as early as possible -->
+  <link rel="preload" as="image" href="/assets/hero-poster.jpg" fetchpriority="high">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/styles.css?v=12">
+  <link rel="stylesheet" href="/css/styles.css?v=13">
 </head>
 <body>
 
   <!-- ============ HERO + NAV ============ -->
   <header class="hero" id="home">
-    <video class="hero__video" autoplay loop muted playsinline preload="auto" poster="/assets/hero-poster.jpg">
-      <source src="/assets/hero.mp4?v=2" type="video/mp4">
+    <!-- preload=metadata: the poster carries first paint, the clip streams in
+         after, so the hero video never competes with LCP on mobile -->
+    <video class="hero__video" autoplay loop muted playsinline preload="metadata" poster="/assets/hero-poster.jpg">
+      <source src="/assets/hero.mp4?v=3" type="video/mp4">
     </video>
     <div class="hero__scrim hero__scrim--corner"></div>
     <div class="hero__scrim hero__scrim--top"></div>
 
     <nav class="nav" aria-label="Primary">
       <a class="nav__brand" href="#home" aria-label="Cliff Heroes home">
-        <img class="nav__logo" src="/assets/logo.png" alt="Cliff Heroes" width="480" height="279">
+        <img class="nav__logo" src="/assets/logo.webp" alt="Cliff Heroes" width="480" height="279">
       </a>
       <ul class="nav__links">
         <li><a href="#home">HOME</a></li>
@@ -95,8 +100,8 @@
 
           <article class="feature-card">
             <div class="feature-card__media feature-card__media--teal" data-pvp-card>
-              <img class="feature-card__img" src="/assets/feature-climber.png" alt="A climber scaling the wall" loading="lazy">
-              <video class="feature-card__video" data-pvp-video muted playsinline preload="none" src="/assets/feature-pvp.mp4"></video>
+              <img class="feature-card__img" src="/assets/feature-climber.webp" alt="A climber scaling the wall" loading="lazy">
+              <video class="feature-card__video" data-pvp-video muted playsinline preload="none" src="/assets/feature-pvp.mp4?v=2"></video>
               <span class="tag tag--teal">REAL-TIME PVP</span>
             </div>
             <div class="feature-card__body">
@@ -108,8 +113,8 @@
 
           <article class="feature-card">
             <div class="feature-card__media feature-card__media--pink" data-pvp-card>
-              <img class="feature-card__img" src="/assets/feature-saboteur.png" alt="A saboteur climber deploying abilities" loading="lazy">
-              <video class="feature-card__video" data-pvp-video muted playsinline preload="none" src="/assets/feature-sabotage.mp4"></video>
+              <img class="feature-card__img" src="/assets/feature-saboteur.webp" alt="A saboteur climber deploying abilities" loading="lazy">
+              <video class="feature-card__video" data-pvp-video muted playsinline preload="none" src="/assets/feature-sabotage.mp4?v=2"></video>
               <span class="tag tag--pink">ABILITIES</span>
             </div>
             <div class="feature-card__body">
@@ -166,7 +171,7 @@
 
     <!-- WISHLIST BAND -->
     <section class="wishlist" id="wishlist" data-wishlist-section>
-      <video class="wishlist__video" data-wishlist-video muted playsinline preload="metadata" src="/assets/wishlist.mp4"></video>
+      <video class="wishlist__video" data-wishlist-video muted playsinline preload="metadata" src="/assets/wishlist.mp4?v=2"></video>
       <div class="wishlist__scrim"></div>
       <div class="wrap wishlist__inner">
         <p class="kicker kicker--accent">// BE FIRST TO ASCEND</p>

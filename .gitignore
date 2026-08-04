@@ -14,3 +14,6 @@ Thumbs.db
 
 # Personal Claude Code overrides
 .claude/settings.local.json
+
+# Image/video sources kept locally, not deployed
+_sources/

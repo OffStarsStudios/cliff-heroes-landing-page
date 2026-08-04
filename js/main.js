@@ -129,7 +129,7 @@
     var TAIL_SPEED = 0.65;
     var tail = document.createElement('video');
     tail.className = v.className;
-    tail.src = '/assets/wishlist-tail.mp4?v=2';
+    tail.src = '/assets/wishlist-tail.mp4?v=3';
     tail.muted = true;
     tail.loop = true;
     tail.playsInline = true;
