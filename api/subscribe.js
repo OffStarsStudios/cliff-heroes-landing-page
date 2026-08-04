@@ -58,7 +58,9 @@ module.exports = async function handler(req, res) {
       headers: {
         'accept': 'application/json',
         'content-type': 'application/json',
-        'api-key': process.env.BREVO_API_KEY
+        // trimmed: pasted env values often carry a trailing newline/space,
+        // which Brevo rejects as unauthorized
+        'api-key': (process.env.BREVO_API_KEY || '').trim()
       },
       body: JSON.stringify(body)
     });
