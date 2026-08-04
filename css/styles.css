@@ -508,6 +508,10 @@ a { color: inherit; text-decoration: none; }
   object-fit: cover;
   display: block;
 }
+/* The Coming Soon banner carries the logo along its top edge, and the card is
+   wider than 16:9, so a centred crop slices straight through it. Anchor to the
+   top instead; the cost is Pedro's lower body, which the strip never fit. */
+.news-card__thumb--top img { object-position: center top; }
 
 .news-card__body { padding: 22px 22px 26px; }
 .news-card__meta {
