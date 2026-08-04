@@ -86,6 +86,14 @@ module.exports = async function handler(req, res) {
     }
 
     console.error('Brevo rejected signup:', brevo.status, detail.slice(0, 300));
+    // TEMPORARY setup diagnostic: surfaces the upstream status/code so the
+    // integration can be verified without digging through runtime logs.
+    // Remove once the first real signup lands.
+    if (req.query && req.query.diag === '1') {
+      var code = '';
+      try { code = (JSON.parse(detail) || {}).code || ''; } catch (e) {}
+      return res.status(502).json({ ok: false, error: 'Subscription failed', brevoStatus: brevo.status, brevoCode: code });
+    }
     return res.status(502).json({ ok: false, error: 'Subscription failed' });
   } catch (err) {
     console.error('Brevo request failed:', err);
