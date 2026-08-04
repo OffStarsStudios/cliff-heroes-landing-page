@@ -11,13 +11,69 @@
   <link rel="icon" href="/assets/favicon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 
-  <!-- Social cards -->
+  <!-- Canonical: /news/<slug> deep links serve this same document, so they
+       all point back here rather than competing as duplicate content. -->
+  <link rel="canonical" href="https://cliff-heroes-landing-page.vercel.app/">
+
+  <!-- Social cards (absolute URLs — crawlers do not resolve relative ones) -->
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Cliff Heroes">
+  <meta property="og:url" content="https://cliff-heroes-landing-page.vercel.app/">
   <meta property="og:title" content="Cliff Heroes - Real-Time PvP Climbing">
   <meta property="og:description" content="Scale the wall. Sabotage your rivals. Be first to the summit in real-time multiplayer climbs. Wishlist Cliff Heroes now.">
-  <meta property="og:image" content="/assets/og-image.png">
+  <meta property="og:image" content="https://cliff-heroes-landing-page.vercel.app/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cliff Heroes logo">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="/assets/og-image.png">
+  <meta name="twitter:title" content="Cliff Heroes - Real-Time PvP Climbing">
+  <meta name="twitter:description" content="Scale the wall. Sabotage your rivals. Be first to the summit in real-time multiplayer climbs.">
+  <meta name="twitter:image" content="https://cliff-heroes-landing-page.vercel.app/assets/og-image.png">
+
+  <!-- Structured data. Only verifiable facts: no ratings, prices or release
+       date, since the game is unreleased and none of those exist yet. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "VideoGame",
+        "@id": "https://cliff-heroes-landing-page.vercel.app/#game",
+        "name": "Cliff Heroes",
+        "url": "https://cliff-heroes-landing-page.vercel.app/",
+        "description": "A real-time PvP climbing game for mobile. Four climbers scale the same procedurally-shifting ascent at once, using smoke bombs, grip-traps and alt loadouts to reach the summit first.",
+        "image": "https://cliff-heroes-landing-page.vercel.app/assets/og-image.png",
+        "applicationCategory": "GameApplication",
+        "gamePlatform": ["iOS", "Android"],
+        "operatingSystem": "iOS, Android",
+        "playMode": "MultiPlayer",
+        "genre": ["Action", "Sports", "Multiplayer"],
+        "inLanguage": "en",
+        "publisher": { "@id": "https://cliff-heroes-landing-page.vercel.app/#studio" }
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://cliff-heroes-landing-page.vercel.app/#studio",
+        "name": "Ascender Studios",
+        "url": "https://cliff-heroes-landing-page.vercel.app/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://cliff-heroes-landing-page.vercel.app/assets/logo.webp",
+          "width": 480,
+          "height": 279
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://cliff-heroes-landing-page.vercel.app/#website",
+        "url": "https://cliff-heroes-landing-page.vercel.app/",
+        "name": "Cliff Heroes",
+        "inLanguage": "en",
+        "publisher": { "@id": "https://cliff-heroes-landing-page.vercel.app/#studio" }
+      }
+    ]
+  }
+  </script>
 
   <!-- Google Analytics 4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-0W4TVPYG7N"></script>
@@ -39,7 +95,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/styles.css?v=14">
+  <link rel="stylesheet" href="/css/styles.css?v=15">
 </head>
 <body>
 

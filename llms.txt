@@ -1,0 +1,33 @@
+# Cliff Heroes
+
+> A real-time PvP climbing game for mobile. Four climbers race up the same
+> procedurally-shifting wall at once, using smoke bombs, grip-traps and alt
+> loadouts to reach the summit first. Currently pre-launch, taking wishlist
+> signups for early access.
+
+- Platforms: iOS, Android
+- Studio: Ascender Studios
+- Status: unreleased, early access via wishlist
+- Site: https://cliff-heroes-landing-page.vercel.app/
+
+## Game
+
+- Race to the Summit: four climbers scale the same procedurally-shifting
+  ascent simultaneously. Read the wall, chain grips, out-pace rivals.
+- Smoke, Traps & Sabotage: every climber carries a kit. Lob smoke bombs to
+  blind the pack, drop grip-traps below you, unlock alt loadouts by ranking
+  up across the season.
+
+## News
+
+- Dev Log #07 — The Spire, Reworked: new grip physics, a taller spire, faster
+  match resets. https://cliff-heroes-landing-page.vercel.app/news/dev-log-07-spire-reworked
+- Season 0 Closed Beta Opens: early access rolls out by region.
+  https://cliff-heroes-landing-page.vercel.app/news/season-0-closed-beta
+- New Climber: Pedro the Alchemist: a support-saboteur built around denial.
+  https://cliff-heroes-landing-page.vercel.app/news/pedro-the-alchemist
+
+## Notes
+
+- Wishlist members get early access first.
+- Article URLs render the same single-page document; canonical is the site root.

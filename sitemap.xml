@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Single-URL sitemap by design.
+
+  /news/<slug> deep links are rewritten to the same index.html and carry a
+  canonical pointing at "/", so they are non-canonical duplicates and are
+  deliberately excluded (per sitemap best practice: never list non-canonical
+  URLs). <priority> and <changefreq> are omitted because Google ignores them.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://cliff-heroes-landing-page.vercel.app/</loc>
+    <lastmod>2026-08-04</lastmod>
+  </url>
+</urlset>

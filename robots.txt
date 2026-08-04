@@ -1,0 +1,26 @@
+# Cliff Heroes — cliff-heroes-landing-page.vercel.app
+
+User-agent: *
+Allow: /
+# Serverless endpoints hold no indexable content.
+Disallow: /api/
+
+# AI search crawlers — explicitly allowed for visibility in AI answers.
+# (These obey robots.txt; /news/ deep links are allowed so the canonical
+#  tag can be read rather than the URLs being blocked outright.)
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://cliff-heroes-landing-page.vercel.app/sitemap.xml
