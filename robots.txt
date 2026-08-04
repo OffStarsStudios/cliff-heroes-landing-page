@@ -1,4 +1,4 @@
-# Cliff Heroes — cliff-heroes-landing-page.vercel.app
+# Cliff Heroes — cliffheroes.com
 
 User-agent: *
 Allow: /
@@ -23,4 +23,4 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
-Sitemap: https://cliff-heroes-landing-page.vercel.app/sitemap.xml
+Sitemap: https://cliffheroes.com/sitemap.xml

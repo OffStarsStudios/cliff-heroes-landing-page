@@ -8,7 +8,7 @@
 - Platforms: iOS, Android
 - Studio: Ascender Studios
 - Status: unreleased, early access via wishlist
-- Site: https://cliff-heroes-landing-page.vercel.app/
+- Site: https://cliffheroes.com/
 
 ## Game
 
@@ -21,11 +21,11 @@
 ## News
 
 - Dev Log #07 — The Spire, Reworked: new grip physics, a taller spire, faster
-  match resets. https://cliff-heroes-landing-page.vercel.app/news/dev-log-07-spire-reworked
+  match resets. https://cliffheroes.com/news/dev-log-07-spire-reworked
 - Season 0 Closed Beta Opens: early access rolls out by region.
-  https://cliff-heroes-landing-page.vercel.app/news/season-0-closed-beta
+  https://cliffheroes.com/news/season-0-closed-beta
 - New Climber: Pedro the Alchemist: a support-saboteur built around denial.
-  https://cliff-heroes-landing-page.vercel.app/news/pedro-the-alchemist
+  https://cliffheroes.com/news/pedro-the-alchemist
 
 ## Notes
 
