@@ -75,8 +75,11 @@
   }
   </script>
 
-  <!-- Google Analytics 4 -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0W4TVPYG7N"></script>
+  <!-- Google Analytics 4 — consent-gated.
+       These are dataLayer pushes only: no request, no cookie. gtag.js itself
+       is injected by js/consent.js, and only once analytics is allowed. Queuing
+       config here keeps dataLayer in the right order, so events fired before
+       the visitor decides still resolve correctly if they then accept. -->
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){ dataLayer.push(arguments); }
@@ -95,7 +98,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/styles.css?v=23">
+  <link rel="stylesheet" href="/css/styles.css?v=24">
 </head>
 <body>
 
@@ -289,12 +292,13 @@
         </nav>
       </div>
       <div class="footer__bar">
-        <span>© 2026 OFFSTARS STUDIOS. ALL RIGHTS RESERVED. &nbsp;&middot;&nbsp; <a class="footer__legal" href="/privacy">PRIVACY POLICY</a></span>
+        <span>© 2026 OFFSTARS STUDIOS. ALL RIGHTS RESERVED. &nbsp;&middot;&nbsp; <a class="footer__legal" href="/privacy">PRIVACY POLICY</a> &nbsp;&middot;&nbsp; <button class="footer__legal footer__legal--btn" type="button" data-consent-settings>COOKIE SETTINGS</button></span>
         <span>MADE FOR THE CLIMB</span>
       </div>
     </div>
   </footer>
 
+  <script src="/js/consent.js?v=1"></script>
   <script src="/js/news-data.js?v=6"></script>
   <script src="/js/main.js?v=19"></script>
 </body>
