@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Single-URL sitemap by design.
+  Only canonical, indexable pages are listed: the landing page and the
+  privacy policy.
 
   /news/<slug> deep links are rewritten to the same index.html and carry a
   canonical pointing at "/", so they are non-canonical duplicates and are
@@ -11,5 +12,9 @@
   <url>
     <loc>https://cliffheroes.com/</loc>
     <lastmod>2026-08-04</lastmod>
+  </url>
+  <url>
+    <loc>https://cliffheroes.com/privacy</loc>
+    <lastmod>2026-08-11</lastmod>
   </url>
 </urlset>

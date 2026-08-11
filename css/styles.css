@@ -1162,3 +1162,115 @@ a { color: inherit; text-decoration: none; }
   .nav__burger span, .mobile-menu, .mobile-menu__inner > * { transition: none; }
   .heart-pop { display: none; }
 }
+
+/* ============================================================
+   Legal pages (/privacy)
+   Long-form reading, so the measure is capped near 70 characters
+   and the type scale is larger than the marketing page's.
+   ============================================================ */
+.legal-page {
+  background: var(--bg-noir);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.legal__nav {
+  padding: 18px var(--pad-x);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.legal__nav .nav__logo { height: 46px; width: auto; display: block; }
+
+.legal {
+  flex: 1;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 54px var(--pad-x) 76px;
+  font-size: 16px;
+  line-height: 1.72;
+  color: var(--text-mut);
+}
+.legal__title {
+  margin: 14px 0 0;
+  font: 700 42px/1.05 var(--font-display);
+  letter-spacing: .01em;
+  color: var(--text-light);
+}
+.legal__updated {
+  margin: 12px 0 0;
+  font: 400 11px var(--font-mono);
+  letter-spacing: .16em;
+  color: var(--ink-faint);
+}
+.legal__lede {
+  margin: 26px 0 0;
+  font-size: 17px;
+  color: var(--text-light);
+  padding: 18px 20px;
+  border-left: 2px solid var(--yellow);
+  background: rgba(255,255,255,.03);
+  border-radius: 0 8px 8px 0;
+}
+.legal h2 {
+  margin: 44px 0 0;
+  font: 700 20px var(--font-display);
+  letter-spacing: .02em;
+  color: var(--yellow);
+}
+.legal p { margin: 14px 0 0; }
+.legal ul { margin: 14px 0 0; padding-left: 20px; }
+.legal li { margin-top: 8px; }
+.legal strong { color: var(--text-light); font-weight: 600; }
+.legal a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+.legal a:hover { color: var(--primary-top); }
+.legal__back {
+  margin-top: 52px;
+  padding-top: 26px;
+  border-top: 1px solid rgba(255,255,255,.08);
+  font: 700 12px var(--font-mono);
+  letter-spacing: .14em;
+}
+.legal__back a { text-decoration: none; }
+
+.legal__footer {
+  padding: 22px 0;
+  border-top: 1px solid rgba(255,255,255,.08);
+  font: 700 10px var(--font-mono);
+  letter-spacing: .16em;
+  color: var(--ink-faint);
+}
+
+@media (max-width: 900px) {
+  .legal { padding-top: 36px; font-size: 15px; }
+  .legal__title { font-size: 32px; }
+  .legal__lede { font-size: 15px; }
+  .legal h2 { font-size: 18px; margin-top: 36px; }
+  .legal__nav .nav__logo { height: 38px; }
+}
+
+/* Consent line under the wishlist form. Kept out of .wishlist__note because
+   the form JS overwrites that element's text with status messages. */
+.wishlist__fineprint {
+  margin: 10px auto 0;
+  max-width: 470px;         /* wraps to a tidy block instead of one long line */
+  font: 400 11px/1.6 var(--font-mono);
+  letter-spacing: .04em;
+  color: rgba(255,255,255,.5);
+}
+.wishlist__fineprint a {
+  color: rgba(255,255,255,.72);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.wishlist__fineprint a:hover { color: #fff; }
+.footer__legal {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.footer__legal:hover { color: #fff; }
