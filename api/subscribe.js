@@ -83,23 +83,61 @@ module.exports = async function handler(req, res) {
   var utm = body.utm && typeof body.utm === 'object' ? body.utm : {};
   var clean = function (v) { return String(v || '').slice(0, 120); };
 
-  var payload = {
-    email: email,
-    updateEnabled: true, // re-subscribing the same email updates instead of failing
-    attributes: {
-      SOURCE: clean(body.source) || 'website',
-      SIGNUP_PAGE: clean(body.page) || '/',
-      SIGNUP_DATE: new Date().toISOString().slice(0, 10),
-      UTM_SOURCE: clean(utm.source),
-      UTM_MEDIUM: clean(utm.medium),
-      UTM_CAMPAIGN: clean(utm.campaign)
-    }
+  var attributes = {
+    SOURCE: clean(body.source) || 'website',
+    SIGNUP_PAGE: clean(body.page) || '/',
+    SIGNUP_DATE: new Date().toISOString().slice(0, 10),
+    UTM_SOURCE: clean(utm.source),
+    UTM_MEDIUM: clean(utm.medium),
+    UTM_CAMPAIGN: clean(utm.campaign)
   };
+
   var listId = parseInt(process.env.BREVO_LIST_ID, 10);
-  if (!isNaN(listId)) payload.listIds = [listId];
+  var doiTemplate = parseInt(process.env.BREVO_DOI_TEMPLATE_ID, 10);
+
+  /* Double opt-in turns on by itself once BREVO_DOI_TEMPLATE_ID is set.
+     Brevo requires includeListIds for the DOI flow, so a list id is needed
+     too; without both we stay on single opt-in rather than half-applying it.
+     Until then behaviour is exactly as before. */
+  var useDoi = !isNaN(doiTemplate) && !isNaN(listId);
+
+  // Fixed rather than derived from the Host header: this URL is baked into an
+  // email, and a spoofed Host would turn the confirmation link into an open
+  // redirect pointing wherever the caller liked.
+  var site = (process.env.SITE_URL || 'https://cliffheroes.com').replace(/\/$/, '');
+
+  var endpoint, payload, bare;
+  if (useDoi) {
+    endpoint = 'https://api.brevo.com/v3/contacts/doubleOptinConfirmation';
+    payload = {
+      email: email,
+      includeListIds: [listId],
+      templateId: doiTemplate,
+      redirectionUrl: site + '/confirmed',
+      attributes: attributes
+    };
+    bare = {
+      email: email,
+      includeListIds: [listId],
+      templateId: doiTemplate,
+      redirectionUrl: site + '/confirmed'
+    };
+  } else {
+    endpoint = 'https://api.brevo.com/v3/contacts';
+    payload = {
+      email: email,
+      updateEnabled: true, // re-subscribing the same email updates instead of failing
+      attributes: attributes
+    };
+    bare = { email: email, updateEnabled: true };
+    if (!isNaN(listId)) {
+      payload.listIds = [listId];
+      bare.listIds = [listId];
+    }
+  }
 
   function send(body) {
-    return fetch('https://api.brevo.com/v3/contacts', {
+    return fetch(endpoint, {
       method: 'POST',
       headers: {
         'accept': 'application/json',
@@ -112,12 +150,12 @@ module.exports = async function handler(req, res) {
     });
   }
 
-  // 201 = created, 204 = updated an existing contact
+  // 201 = created (and the DOI flow's only success code), 204 = updated
   var ok = function (s) { return s === 201 || s === 204; };
 
   try {
     var brevo = await send(payload);
-    if (ok(brevo.status)) return res.status(200).json({ ok: true });
+    if (ok(brevo.status)) return res.status(200).json({ ok: true, doi: useDoi });
 
     var detail = await brevo.text();
 
@@ -126,10 +164,8 @@ module.exports = async function handler(req, res) {
     // outcome, so retry once with just the email + list membership.
     if (brevo.status === 400 && /attribut/i.test(detail)) {
       console.warn('Brevo rejected attributes, retrying bare:', redact(detail.slice(0, 200)));
-      var bare = { email: email, updateEnabled: true };
-      if (payload.listIds) bare.listIds = payload.listIds;
       var retry = await send(bare);
-      if (ok(retry.status)) return res.status(200).json({ ok: true, degraded: true });
+      if (ok(retry.status)) return res.status(200).json({ ok: true, doi: useDoi, degraded: true });
       detail = await retry.text();
     }
 

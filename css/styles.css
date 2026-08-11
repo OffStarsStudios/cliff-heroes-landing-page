@@ -1404,3 +1404,7 @@ a { color: inherit; text-decoration: none; }
   cursor: pointer;
 }
 .legal__inline-btn:hover { color: var(--primary-top); }
+
+/* Confirmation landing page (/confirmed) */
+.confirmed__actions { margin-top: 30px !important; }
+.confirmed__actions .btn { text-decoration: none; }

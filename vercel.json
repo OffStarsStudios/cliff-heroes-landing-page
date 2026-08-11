@@ -5,6 +5,10 @@
       "destination": "/privacy.html"
     },
     {
+      "source": "/confirmed",
+      "destination": "/confirmed.html"
+    },
+    {
       "source": "/news/:slug",
       "destination": "/index.html"
     },

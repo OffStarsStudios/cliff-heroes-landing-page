@@ -310,7 +310,7 @@
         })
       }).then(function (r) {
         return r.json().catch(function () { return {}; }).then(function (data) {
-          return { ok: r.ok && data.ok, status: r.status };
+          return { ok: r.ok && data.ok, doi: !!data.doi, status: r.status };
         });
       }).catch(function () {
         return { ok: false, status: 0 };
@@ -318,9 +318,15 @@
         submit.disabled = false;
         submit.textContent = restLabel;
         if (result.ok) {
-          setNote("You're on the list. We'll email you when early access opens.", 'wishlist__note--ok');
+          // Under double opt-in nothing is on the list until they click the
+          // link, so saying "you're on the list" here would be a lie that
+          // costs us the confirmation.
+          setNote(result.doi
+            ? 'Almost there — check your inbox and confirm your email.'
+            : "You're on the list. We'll email you when early access opens.",
+            'wishlist__note--ok');
           form.reset();
-          track('wishlist_submit', { source: 'wishlist-band' });
+          track('wishlist_submit', { source: 'wishlist-band', doi: result.doi });
         } else if (result.status === 429) {
           // Throttled. Say so plainly rather than implying their email failed.
           setNote('Too many attempts — please wait a few minutes and try again.', 'wishlist__note--err');
