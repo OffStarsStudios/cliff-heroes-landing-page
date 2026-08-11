@@ -17,10 +17,12 @@
   <meta property="og:title" content="Privacy Policy - Cliff Heroes">
   <meta property="og:description" content="How OffStars Studios collects, uses and protects your email address when you join the Cliff Heroes wishlist.">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/styles.css?v=24">
+  <!-- Self-hosted webfonts: no third-party request, no IP handed to Google.
+       crossorigin is required even same-origin -- fonts are always fetched in
+       CORS mode, and without it the preload is discarded and refetched. -->
+  <link rel="preload" href="/assets/fonts/chakra-petch-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/css/fonts.css?v=1">
+  <link rel="stylesheet" href="/css/styles.css?v=26">
 
   <!-- Same consent-gated analytics setup as the landing page. -->
   <script>
@@ -107,8 +109,7 @@
         carries your email address to Brevo. Vercel does not retain it.
       </li>
       <li>
-        <strong>Google</strong> (USA) provides Google Analytics and serves the fonts used
-        on this site. See <a href="#analytics">Analytics and cookies</a> below.
+        <strong>Google</strong> (USA) provides Google Analytics, if you agree to it. See <a href="#analytics">Analytics and cookies</a> below.
       </li>
     </ul>
     <p>
@@ -150,8 +151,9 @@
       identify you, it runs for everyone.
     </p>
     <p>
-      The fonts on this site are loaded from Google's font service, which means
-      Google receives your IP address in order to serve them.
+      The fonts on this site are served from our own domain rather than from a
+      font service, so loading this page sends your IP address to nobody but us
+      and our host.
     </p>
     <p>
       You can block cookies in your browser settings, and browser extensions are
