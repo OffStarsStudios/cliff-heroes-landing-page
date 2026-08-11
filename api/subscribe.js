@@ -11,10 +11,56 @@
 
 var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+/* Brevo echoes the submitted address back in some error bodies. These logs
+   land in Vercel's platform logs, whose retention we do not control, so
+   anything email-shaped is masked before it gets there. */
+function redact(text) {
+  return String(text).replace(/[^\s@"'<>]+@[^\s@"'<>]+\.[^\s@"',}<>]+/g, '<email redacted>');
+}
+
+/* Second line of defence behind the Vercel WAF rate-limit rule, which is the
+   real one: this counter lives in a single warm instance's memory, so it is
+   reset by cold starts and not shared across instances or regions. It still
+   blunts the common case — one script hammering one endpoint — at no cost.
+   The cap is deliberately loose so shared office/CGNAT addresses are not
+   caught out by a handful of genuine signups. */
+var WINDOW_MS = 10 * 60 * 1000;
+var MAX_PER_WINDOW = 10;
+var hits = new Map();
+
+function throttled(ip) {
+  if (!ip) return false;
+  var now = Date.now();
+
+  // Prune expired entries so the map cannot grow without bound on a
+  // long-lived instance.
+  if (hits.size > 5000) {
+    hits.forEach(function (v, k) { if (now - v.start > WINDOW_MS) hits.delete(k); });
+  }
+
+  var rec = hits.get(ip);
+  if (!rec || now - rec.start > WINDOW_MS) {
+    hits.set(ip, { start: now, count: 1 });
+    return false;
+  }
+  rec.count += 1;
+  return rec.count > MAX_PER_WINDOW;
+}
+
+function clientIp(req) {
+  var fwd = String(req.headers['x-forwarded-for'] || '');
+  return fwd.split(',')[0].trim() || String(req.headers['x-real-ip'] || '') || '';
+}
+
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     return res.status(405).json({ ok: false, error: 'Method not allowed' });
+  }
+
+  if (throttled(clientIp(req))) {
+    res.setHeader('Retry-After', '600');
+    return res.status(429).json({ ok: false, error: 'Too many attempts' });
   }
 
   var body = req.body || {};
@@ -79,7 +125,7 @@ module.exports = async function handler(req, res) {
     // Losing a signup over a missing custom field would be the worst
     // outcome, so retry once with just the email + list membership.
     if (brevo.status === 400 && /attribut/i.test(detail)) {
-      console.warn('Brevo rejected attributes, retrying bare:', detail.slice(0, 200));
+      console.warn('Brevo rejected attributes, retrying bare:', redact(detail.slice(0, 200)));
       var bare = { email: email, updateEnabled: true };
       if (payload.listIds) bare.listIds = payload.listIds;
       var retry = await send(bare);
@@ -87,7 +133,7 @@ module.exports = async function handler(req, res) {
       detail = await retry.text();
     }
 
-    console.error('Brevo rejected signup:', brevo.status, detail.slice(0, 300));
+    console.error('Brevo rejected signup:', brevo.status, redact(detail.slice(0, 300)));
     return res.status(502).json({ ok: false, error: 'Subscription failed' });
   } catch (err) {
     console.error('Brevo request failed:', err);

@@ -310,10 +310,10 @@
         })
       }).then(function (r) {
         return r.json().catch(function () { return {}; }).then(function (data) {
-          return { ok: r.ok && data.ok };
+          return { ok: r.ok && data.ok, status: r.status };
         });
       }).catch(function () {
-        return { ok: false };
+        return { ok: false, status: 0 };
       }).then(function (result) {
         submit.disabled = false;
         submit.textContent = restLabel;
@@ -321,6 +321,9 @@
           setNote("You're on the list. We'll email you when early access opens.", 'wishlist__note--ok');
           form.reset();
           track('wishlist_submit', { source: 'wishlist-band' });
+        } else if (result.status === 429) {
+          // Throttled. Say so plainly rather than implying their email failed.
+          setNote('Too many attempts — please wait a few minutes and try again.', 'wishlist__note--err');
         } else {
           setNote("Something went wrong — please try again.", 'wishlist__note--err');
         }
