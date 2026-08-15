@@ -10,7 +10,11 @@
   <meta name="robots" content="noindex, follow">
 
   <link rel="icon" href="/favicon.ico" sizes="48x48">
-  <link rel="icon" href="/assets/favicon-32.png" type="image/png" sizes="32x32">
+  <!-- 96px: Google requires a square favicon that is a multiple of 48px,
+       and picks the closest available. The .ico now genuinely contains a
+       48px frame as well; it previously claimed 48 but held only 32. -->
+  <link rel="icon" href="/assets/icon-96.png" type="image/png" sizes="96x96">
+  <link rel="icon" href="/assets/icon-192.png" type="image/png" sizes="192x192">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 
   <link rel="preload" href="/assets/fonts/chakra-petch-700-latin.woff2" as="font" type="font/woff2" crossorigin>
