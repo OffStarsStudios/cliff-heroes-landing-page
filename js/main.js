@@ -8,6 +8,11 @@
   var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
+  /* Mirrors EMAIL_RE in api/subscribe.js: if the two disagree, the form either
+     rejects addresses the server would accept or reports a server error for
+     something it should have caught here. */
+  var EMAIL_RE = /^[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\.)+[A-Za-z]{2,}$/;
+
   /* GA4 event helper — no-ops when gtag is absent (local dev, blockers). */
   function track(event, params) {
     if (typeof window.gtag === 'function') window.gtag('event', event, params || {});
@@ -284,14 +289,104 @@
       noteTimer = setTimeout(function () { setNote(defaultNote); }, 6000);
     }
 
+
+    /* ---- "did you mean gmail.com?" ----
+       The MX check on the server catches domains that do not exist, but the
+       misspellings that actually cost signups -- gmial.com, hotnail.com --
+       are registered by squatters and resolve perfectly well. Only comparing
+       against the real providers catches those, and it has to happen here,
+       because the person who mistyped is the only one who can fix it. */
+    var COMMON_DOMAINS = [
+      'gmail.com', 'googlemail.com', 'yahoo.com', 'yahoo.co.uk', 'ymail.com',
+      'hotmail.com', 'hotmail.co.uk', 'outlook.com', 'live.com', 'msn.com',
+      'icloud.com', 'me.com', 'mac.com', 'aol.com', 'gmx.com', 'zoho.com',
+      'proton.me', 'protonmail.com', 'yandex.com', 'mail.com',
+      'walla.com', 'walla.co.il', 'gmail.co.il', 'outlook.co.il'
+    ];
+
+    /* Damerau-Levenshtein, not plain Levenshtein. Swapping two adjacent
+       characters is a single keyboard slip and by far the most common way an
+       address gets mistyped -- "gmial.com" for "gmail.com". Plain Levenshtein
+       scores that as two edits (a delete plus an insert) and would miss it. */
+    function editDistance(a, b) {
+      var m = a.length, n = b.length, d = [], i, j;
+      for (i = 0; i <= m; i++) d[i] = [i];
+      for (j = 0; j <= n; j++) d[0][j] = j;
+      for (i = 1; i <= m; i++) {
+        for (j = 1; j <= n; j++) {
+          var cost = a.charAt(i - 1) === b.charAt(j - 1) ? 0 : 1;
+          d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + cost);
+          if (i > 1 && j > 1 &&
+              a.charAt(i - 1) === b.charAt(j - 2) &&
+              a.charAt(i - 2) === b.charAt(j - 1)) {
+            d[i][j] = Math.min(d[i][j], d[i - 2][j - 2] + cost);
+          }
+        }
+      }
+      return d[m][n];
+    }
+
+    function didYouMean(email) {
+      var at = email.lastIndexOf('@');
+      if (at < 0) return null;
+      var local = email.slice(0, at), domain = email.slice(at + 1).toLowerCase();
+      if (!domain || COMMON_DOMAINS.indexOf(domain) !== -1) return null;
+
+      var best = null, bestDist = Infinity;
+      COMMON_DOMAINS.forEach(function (d) {
+        var dist = editDistance(domain, d);
+        if (dist < bestDist) { bestDist = dist; best = d; }
+      });
+      // One edit always; two only for longer domains, where a 2-character slip
+      // is still plausible and a false match is less likely.
+      var limit = best && best.length > 9 ? 2 : 1;
+      if (best && bestDist > 0 && bestDist <= limit) return local + '@' + best;
+      return null;
+    }
+
+    var suggestEl = document.createElement('p');
+    suggestEl.className = 'wishlist__suggest';
+    suggestEl.hidden = true;
+    var suggestBtn = document.createElement('button');
+    suggestBtn.type = 'button';
+    suggestBtn.className = 'wishlist__suggest-btn';
+    suggestEl.appendChild(document.createTextNode('Did you mean '));
+    suggestEl.appendChild(suggestBtn);
+    suggestEl.appendChild(document.createTextNode('?'));
+    form.insertAdjacentElement('afterend', suggestEl);
+
+    var offeredFor = null;   // so a second submit sends what they actually typed
+    function hideSuggestion() { suggestEl.hidden = true; }
+    suggestBtn.addEventListener('click', function () {
+      input.value = suggestBtn.textContent;
+      hideSuggestion();
+      offeredFor = null;
+      form.dispatchEvent(new Event('submit', { cancelable: true }));
+    });
+    input.addEventListener('input', hideSuggestion);
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var value = (input.value || '').trim();
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+      if (!EMAIL_RE.test(value) || value.length > 254) {
         setNote('Enter a valid email to get notified.', 'wishlist__note--err');
+        hideSuggestion();
         input.focus();
         return;
       }
+
+      // Offer the correction once. Submitting the same address again means
+      // they meant it, so an unusual-but-real domain still gets through.
+      var fixed = didYouMean(value);
+      if (fixed && offeredFor !== value) {
+        offeredFor = value;
+        suggestBtn.textContent = fixed;
+        suggestEl.hidden = false;
+        setNote('Check the address — or press NOTIFY ME again to use it as typed.', 'wishlist__note--err');
+        return;
+      }
+      hideSuggestion();
+
       if (submit.disabled) return;   // ignore double submits while pending
 
       submit.disabled = true;
@@ -310,7 +405,7 @@
         })
       }).then(function (r) {
         return r.json().catch(function () { return {}; }).then(function (data) {
-          return { ok: r.ok && data.ok, doi: !!data.doi, status: r.status };
+          return { ok: r.ok && data.ok, doi: !!data.doi, reason: data.reason, status: r.status };
         });
       }).catch(function () {
         return { ok: false, status: 0 };
@@ -327,6 +422,8 @@
             'wishlist__note--ok');
           form.reset();
           track('wishlist_submit', { source: 'wishlist-band', doi: result.doi });
+        } else if (result.reason === 'domain') {
+          setNote("We couldn't find that email domain — please check the spelling.", 'wishlist__note--err');
         } else if (result.status === 429) {
           // Throttled. Say so plainly rather than implying their email failed.
           setNote('Too many attempts — please wait a few minutes and try again.', 'wishlist__note--err');

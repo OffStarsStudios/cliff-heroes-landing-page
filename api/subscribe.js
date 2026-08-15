@@ -9,7 +9,70 @@
      BREVO_LIST_ID   numeric contact-list id (optional but recommended)
    ============================================================ */
 
-var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+var dns = require('dns').promises;
+
+/* Stricter than the old /^[^\s@]+@[^\s@]+\.[^\s@]+$/, which happily accepted
+   "a@b.c", ".x@y.com" and "a..b@c.com". Rejects leading/trailing/doubled dots
+   in the local part, malformed domain labels, and single-character TLDs.
+   Deliberately does not attempt full RFC 5322 (quoted local parts, IP
+   literals) -- nobody signs up to a game wishlist with those. */
+var EMAIL_RE = /^[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\.)+[A-Za-z]{2,}$/;
+
+/* ---- does this domain actually accept mail? ----
+   Catches the addresses that are shaped correctly but cannot possibly
+   receive anything: asdf@asdf.com, gmial.com, a domain that never existed.
+   It cannot tell whether a mailbox exists -- only double opt-in proves that.
+
+   Resolved per domain and cached, since a wishlist sees the same handful of
+   providers over and over. */
+var MX_TTL = 60 * 60 * 1000;
+var mxCache = new Map();
+
+function withTimeout(promise, ms) {
+  return Promise.race([
+    promise,
+    new Promise(function (_, reject) {
+      setTimeout(function () { reject(new Error('TIMEOUT')); }, ms);
+    })
+  ]);
+}
+
+function lookup(fn, host, ms) {
+  return withTimeout(fn(host), ms)
+    .then(function (records) { return { records: records || [] }; })
+    .catch(function (err) { return { code: (err && err.code) || 'TIMEOUT' }; });
+}
+
+// Only these mean "this domain genuinely does not accept mail". Anything else
+// -- timeout, SERVFAIL, resolver hiccup -- is our problem, not the visitor's,
+// so we let the signup through rather than lose it to our own flaky DNS.
+var CONCLUSIVE = ['ENOTFOUND', 'ENODATA', 'NXDOMAIN'];
+
+async function domainAcceptsMail(domain) {
+  var now = Date.now();
+  var hit = mxCache.get(domain);
+  if (hit && now - hit.at < MX_TTL) return hit.ok;
+  if (mxCache.size > 2000) mxCache.clear();
+
+  var mx = await lookup(dns.resolveMx, domain, 2500);
+  if (mx.records && mx.records.length) {
+    mxCache.set(domain, { ok: true, at: now });
+    return true;
+  }
+  if (mx.code && CONCLUSIVE.indexOf(mx.code) === -1) return true;   // fail open
+
+  // No MX is not conclusive on its own: RFC 5321 says a host with an address
+  // record still accepts mail there.
+  var a = await lookup(dns.resolve4, domain, 2000);
+  if (a.records && a.records.length) {
+    mxCache.set(domain, { ok: true, at: now });
+    return true;
+  }
+  if (a.code && CONCLUSIVE.indexOf(a.code) === -1) return true;     // fail open
+
+  mxCache.set(domain, { ok: false, at: now });
+  return false;
+}
 
 /* Brevo echoes the submitted address back in some error bodies. These logs
    land in Vercel's platform logs, whose retention we do not control, so
@@ -71,7 +134,11 @@ module.exports = async function handler(req, res) {
   if (hp) return res.status(200).json({ ok: true });
 
   if (!EMAIL_RE.test(email) || email.length > 254) {
-    return res.status(400).json({ ok: false, error: 'Invalid email' });
+    return res.status(400).json({ ok: false, error: 'Invalid email', reason: 'syntax' });
+  }
+
+  if (!(await domainAcceptsMail(email.split('@').pop()))) {
+    return res.status(400).json({ ok: false, error: 'Unknown domain', reason: 'domain' });
   }
 
   if (!process.env.BREVO_API_KEY) {
