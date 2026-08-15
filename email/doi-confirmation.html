@@ -1,0 +1,120 @@
+<!--
+  ============================================================
+  Brevo double opt-in confirmation email — Cliff Heroes
+
+  Paste into Brevo: Marketing > Templates > Email > New template
+  > Code your own / Paste your code.
+
+  {{ params.DOIurl }} is Brevo's placeholder for the unique
+  confirmation link. It MUST survive editing — if it is lost or
+  altered, the email still sends and looks fine, but nobody can
+  ever confirm and the list silently stops growing.
+
+  Written for email clients, not browsers: table layout, inline
+  styles, web-safe fonts (Chakra Petch cannot load in Gmail or
+  Outlook), PNG logo (WebP does not render in Outlook), and a
+  solid background colour behind the gradient so Outlook — which
+  ignores linear-gradient — still shows an orange button.
+  ============================================================
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="x-apple-disable-message-reformatting" />
+  <title>Confirm your email</title>
+</head>
+<body style="margin:0; padding:0; background-color:#07070c;">
+
+  <!-- Preheader: the grey line shown next to the subject in most inboxes.
+       Hidden in the body itself. -->
+  <div style="display:none; font-size:1px; color:#07070c; line-height:1px; max-height:0; max-width:0; opacity:0; overflow:hidden;">
+    One tap to confirm and you're on the Cliff Heroes wishlist.
+    &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
+  </div>
+
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#07070c;">
+    <tr>
+      <td align="center" style="padding:32px 16px;">
+
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px; max-width:600px;">
+
+          <!-- logo -->
+          <tr>
+            <td align="center" style="padding:8px 0 26px 0;">
+              <img src="https://cliffheroes.com/assets/logo-email.png"
+                   alt="Cliff Heroes" width="220" height="128"
+                   style="display:block; border:0; outline:none; text-decoration:none; width:220px; height:auto;" />
+            </td>
+          </tr>
+
+          <!-- panel -->
+          <tr>
+            <td style="background-color:#12121c; border:1px solid rgba(255,255,255,0.10); border-radius:16px; padding:38px 34px;">
+
+              <p style="margin:0 0 6px 0; font-family:'Courier New',Courier,monospace; font-size:12px; font-weight:bold; letter-spacing:2.6px; color:#fdd101;">
+                // ONE LAST STEP
+              </p>
+
+              <h1 style="margin:0 0 16px 0; font-family:Arial,Helvetica,sans-serif; font-size:28px; line-height:1.2; font-weight:bold; color:#ffffff;">
+                Confirm your email
+              </h1>
+
+              <p style="margin:0 0 16px 0; font-family:Arial,Helvetica,sans-serif; font-size:16px; line-height:1.6; color:#b6b6cc;">
+                You asked to join the <strong style="color:#ffffff;">Cliff Heroes</strong> wishlist.
+                Tap the button below to confirm it's really you, and you're on the list.
+              </p>
+
+              <p style="margin:0 0 28px 0; font-family:Arial,Helvetica,sans-serif; font-size:16px; line-height:1.6; color:#b6b6cc;">
+                After that we'll email you about closed-beta builds, season drops and
+                launch alerts — and nothing else.
+              </p>
+
+              <!-- button: bgcolor carries Outlook, the gradient is a bonus elsewhere -->
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" style="margin:0 auto;">
+                <tr>
+                  <td align="center" bgcolor="#fb8c01"
+                      style="border-radius:12px; background-color:#fb8c01; background-image:linear-gradient(180deg,#fdd101,#f25c01);">
+                    <a href="{{ params.DOIurl }}"
+                       style="display:inline-block; padding:17px 40px; font-family:Arial,Helvetica,sans-serif; font-size:15px; font-weight:bold; letter-spacing:0.6px; color:#1a0d00; text-decoration:none; border-radius:12px;">
+                      CONFIRM MY EMAIL
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <p style="margin:26px 0 0 0; font-family:Arial,Helvetica,sans-serif; font-size:13px; line-height:1.6; color:#8a8aa0;">
+                Button not working? Copy this link into your browser:
+              </p>
+              <p style="margin:6px 0 0 0; font-family:'Courier New',Courier,monospace; font-size:12px; line-height:1.5; word-break:break-all;">
+                <a href="{{ params.DOIurl }}" style="color:#fb8c01; text-decoration:underline;">{{ params.DOIurl }}</a>
+              </p>
+
+            </td>
+          </tr>
+
+          <!-- footer -->
+          <tr>
+            <td style="padding:26px 12px 0 12px;">
+              <p style="margin:0 0 12px 0; font-family:Arial,Helvetica,sans-serif; font-size:13px; line-height:1.6; color:#8a8aa0;">
+                Didn't sign up? Just ignore this email — you won't be added to anything
+                and we won't contact you again.
+              </p>
+              <p style="margin:0; font-family:'Courier New',Courier,monospace; font-size:11px; line-height:1.7; letter-spacing:0.5px; color:#6a6a80;">
+                OFFSTARS STUDIOS &nbsp;&middot;&nbsp; TEL AVIV, ISRAEL<br />
+                <a href="https://cliffheroes.com/privacy" style="color:#8a8aa0; text-decoration:underline;">Privacy Policy</a>
+                &nbsp;&middot;&nbsp;
+                <a href="https://cliffheroes.com/terms" style="color:#8a8aa0; text-decoration:underline;">Terms of Use</a>
+              </p>
+            </td>
+          </tr>
+
+        </table>
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

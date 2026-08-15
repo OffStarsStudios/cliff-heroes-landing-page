@@ -1,0 +1,26 @@
+Plain-text version of the double opt-in confirmation email.
+
+Brevo has a plain-text field alongside the HTML one. Filling it improves
+deliverability (a text/plain part is one of the things spam filters look for)
+and covers clients that refuse HTML. If left empty, Brevo auto-generates one
+from the HTML, which usually reads badly.
+
+----------------------------------------------------------------------
+
+Confirm your email
+
+You asked to join the Cliff Heroes wishlist. Open the link below to
+confirm it's really you, and you're on the list.
+
+{{ params.DOIurl }}
+
+After that we'll email you about closed-beta builds, season drops and
+launch alerts - and nothing else.
+
+Didn't sign up? Just ignore this email. You won't be added to anything
+and we won't contact you again.
+
+--
+OffStars Studios, Tel Aviv, Israel
+Privacy Policy: https://cliffheroes.com/privacy
+Terms of Use:   https://cliffheroes.com/terms
