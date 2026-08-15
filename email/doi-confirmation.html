@@ -45,6 +45,7 @@
       .ch-btn-td  { display: block !important; width: 100% !important; }
       .ch-btn     { display: block !important; padding: 16px 12px !important; }
       .ch-btnwrap { width: 100% !important; }
+      .ch-art     { width: 240px !important; }
     }
     /* Stop iOS/Android auto-linking phone numbers and dates in our own colour */
     a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !important; }
@@ -123,9 +124,20 @@
             </td>
           </tr>
 
+          <!-- sign-off art. Flattened onto the body colour rather than shipped
+               with alpha: transparency support across mail clients is patchy,
+               and the background behind it is a known flat colour. -->
+          <tr>
+            <td align="center" style="padding:26px 0 0 0;">
+              <img src="https://cliffheroes.com/assets/heroes-email.jpg"
+                   alt="Cliff, Pedro and Guy" width="320" class="ch-art"
+                   style="display:block; border:0; outline:none; text-decoration:none; width:320px; max-width:80%; height:auto; margin:0 auto;" />
+            </td>
+          </tr>
+
           <!-- footer -->
           <tr>
-            <td style="padding:26px 12px 0 12px;">
+            <td style="padding:22px 12px 0 12px;">
               <p style="margin:0 0 12px 0; font-family:Arial,Helvetica,sans-serif; font-size:13px; line-height:1.6; color:#8a8aa0;">
                 Didn't sign up? Just ignore this email — you won't be added to anything
                 and we won't contact you again.
@@ -135,6 +147,11 @@
                 <a href="https://cliffheroes.com/privacy" style="color:#8a8aa0; text-decoration:underline;">Privacy Policy</a>
                 &nbsp;&middot;&nbsp;
                 <a href="https://cliffheroes.com/terms" style="color:#8a8aa0; text-decoration:underline;">Terms of Use</a>
+                &nbsp;&middot;&nbsp;
+                <!-- Plain URL, not Brevo's {{ unsubscribe }}: that tag is
+                     reported to throw a render error on transactional sends,
+                     which would break the confirmation email itself. -->
+                <a href="https://cliffheroes.com/unsubscribe" style="color:#8a8aa0; text-decoration:underline;">Unsubscribe</a>
               </p>
             </td>
           </tr>

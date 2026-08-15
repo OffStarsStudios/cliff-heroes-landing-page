@@ -9,6 +9,10 @@
       "destination": "/terms.html"
     },
     {
+      "source": "/unsubscribe",
+      "destination": "/unsubscribe.html"
+    },
+    {
       "source": "/confirmed",
       "destination": "/confirmed.html"
     },

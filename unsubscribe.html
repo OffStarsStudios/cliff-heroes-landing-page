@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Unsubscribe - Cliff Heroes</title>
+  <meta name="description" content="Remove your email address from the Cliff Heroes wishlist.">
+  <!-- Reached from an email or a footer link; nothing here belongs in search
+       results, and it must never outrank the landing page. -->
+  <meta name="robots" content="noindex, follow">
+
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="icon" href="/assets/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+
+  <link rel="preload" href="/assets/fonts/chakra-petch-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/css/fonts.css?v=1">
+  <link rel="stylesheet" href="/css/styles.css?v=30">
+</head>
+<body class="legal-page">
+
+  <header class="legal__nav">
+    <a class="nav__brand" href="/" aria-label="Cliff Heroes home">
+      <img class="nav__logo" src="/assets/logo.webp" alt="Cliff Heroes" width="480" height="279">
+    </a>
+  </header>
+
+  <main class="legal">
+    <p class="kicker kicker--accent">// WISHLIST</p>
+    <h1 class="legal__title">UNSUBSCRIBE</h1>
+
+    <p class="legal__lede">
+      Enter the address you signed up with and we'll stop emailing you. No
+      questions, no confirmation step, and you can always join again later.
+    </p>
+
+    <form class="unsub__form" novalidate>
+      <label class="unsub__label" for="unsub-email">Email address</label>
+      <input class="unsub__input" id="unsub-email" type="email" name="email"
+             placeholder="your@email.com" autocomplete="email" required>
+      <button class="btn btn--primary unsub__submit" type="submit" data-hover-btn>UNSUBSCRIBE</button>
+    </form>
+    <p class="unsub__note" role="status"></p>
+
+    <p>
+      Unsubscribing stops all email from us. We keep a note that you opted out —
+      that record is what prevents you being added back by mistake. If you'd
+      rather we erased your address entirely, email
+      <a href="mailto:supportoffstars@gmail.com">supportoffstars@gmail.com</a>
+      and we'll delete it.
+    </p>
+
+    <p class="legal__back">
+      <a href="/">&larr; Back to Cliff Heroes</a> &nbsp;&middot;&nbsp;
+      <a href="/privacy">Privacy Policy</a>
+    </p>
+  </main>
+
+  <footer class="legal__footer">
+    <div class="wrap">
+      <span>&copy; 2026 OFFSTARS STUDIOS. ALL RIGHTS RESERVED.</span>
+    </div>
+  </footer>
+
+  <script src="/js/unsubscribe.js?v=1"></script>
+</body>
+</html>

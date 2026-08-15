@@ -1428,3 +1428,61 @@ a { color: inherit; text-decoration: none; }
 }
 .wishlist__suggest-btn:hover { color: #fff; }
 .wishlist__suggest-btn:focus-visible { outline: 2px solid var(--yellow); outline-offset: 2px; }
+
+/* ---------- /confirmed sign-off art ---------- */
+.confirmed__art {
+  display: block;
+  width: 100%;
+  max-width: 440px;
+  height: auto;
+  margin: 34px auto 0;
+}
+.confirmed__optout {
+  margin-top: 18px !important;
+  text-align: center;
+  font: 400 13px var(--font-mono);
+  color: var(--ink-faint);
+}
+
+/* ---------- /unsubscribe form ---------- */
+.unsub__form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 28px;
+}
+.unsub__label {
+  flex: 0 0 100%;
+  font: 700 11px var(--font-mono);
+  letter-spacing: .16em;
+  color: var(--text-mut);
+}
+.unsub__input {
+  flex: 1 1 240px;
+  min-width: 0;
+  padding: 15px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.04);
+  color: var(--text-light);
+  font: 400 15px var(--font-display);
+}
+.unsub__input::placeholder { color: #6a6a80; }
+.unsub__input:focus-visible {
+  outline: 2px solid var(--yellow);
+  outline-offset: 2px;
+  border-color: transparent;
+}
+.unsub__submit { flex: 0 0 auto; justify-content: center; }
+.unsub__note {
+  margin: 14px 0 0;
+  min-height: 20px;
+  font: 400 13px var(--font-mono);
+  color: var(--ink-faint);
+}
+.unsub__note--ok  { color: var(--teal); }
+.unsub__note--err { color: #ff8080; }
+
+@media (max-width: 600px) {
+  .unsub__input, .unsub__submit { flex: 1 1 100%; }
+}
