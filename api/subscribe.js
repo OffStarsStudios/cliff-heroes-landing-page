@@ -56,8 +56,19 @@ async function domainAcceptsMail(domain) {
 
   var mx = await lookup(dns.resolveMx, domain, 2500);
   if (mx.records && mx.records.length) {
-    mxCache.set(domain, { ok: true, at: now });
-    return true;
+    // A single MX with an empty exchange is a "null MX" (RFC 7505): the domain
+    // is explicitly declaring that it accepts no mail at all. Counting records
+    // alone reads that as valid, which is exactly backwards -- and it is common,
+    // since domains that only serve a website increasingly publish one.
+    var usable = mx.records.filter(function (r) { return r && r.exchange; });
+    if (usable.length) {
+      mxCache.set(domain, { ok: true, at: now });
+      return true;
+    }
+    // Null MX overrides the implicit A-record fallback below; it is a refusal,
+    // not an absence.
+    mxCache.set(domain, { ok: false, at: now });
+    return false;
   }
   if (mx.code && CONCLUSIVE.indexOf(mx.code) === -1) return true;   // fail open
 
