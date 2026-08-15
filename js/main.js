@@ -405,14 +405,17 @@
         })
       }).then(function (r) {
         return r.json().catch(function () { return {}; }).then(function (data) {
-          return { ok: r.ok && data.ok, doi: !!data.doi, reason: data.reason, status: r.status };
+          return { ok: r.ok && data.ok, doi: !!data.doi, already: !!data.already, reason: data.reason, status: r.status };
         });
       }).catch(function () {
         return { ok: false, status: 0 };
       }).then(function (result) {
         submit.disabled = false;
         submit.textContent = restLabel;
-        if (result.ok) {
+        if (result.already) {
+          setNote("You're already on the list — nothing more to do.", 'wishlist__note--ok');
+          form.reset();
+        } else if (result.ok) {
           // Under double opt-in nothing is on the list until they click the
           // link, so saying "you're on the list" here would be a lie that
           // costs us the confirmation.

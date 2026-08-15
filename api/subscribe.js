@@ -126,6 +126,31 @@ function clientIp(req) {
   return fwd.split(',')[0].trim() || String(req.headers['x-real-ip'] || '') || '';
 }
 
+/* Is this address already on the list?
+   Returns 'subscribed', 'rejoining', 'new', or null when we could not tell.
+
+   Someone who previously unsubscribed must be able to come back, so a
+   blacklisted contact is deliberately NOT treated as already subscribed --
+   telling them "you are already on the list" when they are not on it, and
+   would not receive anything, would be actively wrong. */
+async function listMembership(email, listId, key) {
+  try {
+    var r = await fetch('https://api.brevo.com/v3/contacts/' + encodeURIComponent(email) +
+                        '?identifierType=email_id', {
+      headers: { 'accept': 'application/json', 'api-key': key }
+    });
+    if (r.status === 404) return 'new';
+    if (!r.ok) return null;                       // unknown -> carry on as normal
+    var c = await r.json();
+    if (c.emailBlacklisted) return 'rejoining';
+    var lists = Array.isArray(c.listIds) ? c.listIds : [];
+    return lists.indexOf(listId) !== -1 ? 'subscribed' : 'new';
+  } catch (err) {
+    console.error('Brevo contact lookup failed:', err && err.message);
+    return null;                                  // never block a signup on this
+  }
+}
+
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
@@ -156,6 +181,16 @@ module.exports = async function handler(req, res) {
     // Deploy-time misconfiguration; never expose details to the client.
     console.error('BREVO_API_KEY is not set');
     return res.status(502).json({ ok: false, error: 'Subscription unavailable' });
+  }
+
+  var listIdEarly = parseInt(process.env.BREVO_LIST_ID, 10);
+  if (!isNaN(listIdEarly)) {
+    var membership = await listMembership(email, listIdEarly,
+                                          (process.env.BREVO_API_KEY || '').trim());
+    if (membership === 'subscribed') {
+      // Not an error: they are on the list, there is simply nothing to do.
+      return res.status(200).json({ ok: true, already: true });
+    }
   }
 
   var utm = body.utm && typeof body.utm === 'object' ? body.utm : {};
