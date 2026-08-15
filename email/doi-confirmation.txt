@@ -12,7 +12,7 @@ Confirm your email
 You asked to join the Cliff Heroes wishlist. Open the link below to
 confirm it's really you, and you're on the list.
 
-{{ params.DOIurl }}
+{{ doubleoptin }}
 
 After that we'll email you about closed-beta builds, season drops and
 launch alerts - and nothing else.

@@ -5,10 +5,13 @@
   Paste into Brevo: Marketing > Templates > Email > New template
   > Code your own / Paste your code.
 
-  {{ params.DOIurl }} is Brevo's placeholder for the unique
-  confirmation link. It MUST survive editing — if it is lost or
-  altered, the email still sends and looks fine, but nobody can
-  ever confirm and the list silently stops growing.
+  {{ doubleoptin }} is Brevo's placeholder for the unique
+  confirmation link, and it does double duty: Brevo decides whether
+  a template is usable for double opt-in at all by looking for this
+  tag in the content. Without it the template is not merely broken —
+  the API rejects the templateId outright. It is NOT {{ params.DOIurl }}.
+
+  The template must also be tagged "optin" in Brevo, and be active.
 
   Written for email clients, not browsers: table layout, inline
   styles, web-safe fonts (Chakra Petch cannot load in Gmail or
@@ -102,7 +105,7 @@
                 <tr>
                   <td align="center" bgcolor="#fb8c01" class="ch-btn-td"
                       style="border-radius:12px; background-color:#fb8c01; background-image:linear-gradient(180deg,#fdd101,#f25c01);">
-                    <a href="{{ params.DOIurl }}" class="ch-btn"
+                    <a href="{{ doubleoptin }}" class="ch-btn"
                        style="display:inline-block; padding:17px 34px; font-family:Arial,Helvetica,sans-serif; font-size:15px; font-weight:bold; letter-spacing:0.6px; color:#1a0d00; text-decoration:none; border-radius:12px;">
                       CONFIRM MY EMAIL
                     </a>
@@ -114,7 +117,7 @@
                 Button not working? Copy this link into your browser:
               </p>
               <p style="margin:6px 0 0 0; font-family:'Courier New',Courier,monospace; font-size:12px; line-height:1.5; word-break:break-all; overflow-wrap:break-word;">
-                <a href="{{ params.DOIurl }}" style="color:#fb8c01; text-decoration:underline;">{{ params.DOIurl }}</a>
+                <a href="{{ doubleoptin }}" style="color:#fb8c01; text-decoration:underline;">{{ doubleoptin }}</a>
               </p>
 
             </td>
